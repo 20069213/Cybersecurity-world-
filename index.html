@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>💀 ABDO SAAD 💀 — don't blink</title>
+<meta name="description" content="ABDO SAAD — Offensive Security Researcher. Enter at your own risk." />
+<meta name="theme-color" content="#05070a" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=JetBrains+Mono:wght@400;600;700&family=Tajawal:wght@300;400;500;700;800;900&family=Creepster&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#05070a;
+  --bg-2:#080c12;
+  --panel:#0b1119;
+  --panel-2:#0e1620;
+  --line:#151e29;
+  --line-2:#1d2a38;
+  --text:#d9e2ea;
+  --muted:#69798b;
+  --mint:#00ffc8;
+  --mint-dim:#073a30;
+  --red:#ff0055;
+  --blood:#8b0000;
+  --violet:#9d7bff;
+  --amber:#ffb86b;
+  --cyan:#00fff0;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --display:'Orbitron',sans-serif;
+  --sans:'Tajawal',system-ui,sans-serif;
+  --horror:'Creepster',cursive;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--text);
+  line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;
+  cursor:none;
+}
+@media (pointer:coarse){body{cursor:auto}}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--red);color:#fff}
+
+/* ============== CURSOR ============== */
+.cursor{
+  position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;
+  background:var(--mint);pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;
+  box-shadow:0 0 14px var(--mint);mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;top:0;left:0;width:36px;height:36px;border-radius:50%;
+  border:1.5px solid var(--mint);pointer-events:none;z-index:99998;
+  transform:translate(-50%,-50%);transition:width .3s,height .3s,opacity .3s;
+  opacity:.55;
+}
+.cursor.hover{width:18px;height:18px;background:var(--red);box-shadow:0 0 24px var(--red)}
+.blood-drop{
+  position:fixed;width:6px;height:6px;background:var(--blood);
+  border-radius:50%;pointer-events:none;z-index:9997;
+  box-shadow:0 0 8px var(--blood);animation:bloodfall .8s ease-in forwards;
+}
+@keyframes bloodfall{
+  to{transform:translateY(60px) scale(0);opacity:0}
+}
+@media (pointer:coarse){.cursor,.cursor-ring,.blood-drop{display:none}}
+
+/* ============== BACKGROUNDS ============== */
+#matrix{position:fixed;inset:0;z-index:-3;opacity:.16;pointer-events:none}
+.grid-bg{
+  position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,255,200,.03) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,255,200,.03) 1px,transparent 1px);
+  background-size:52px 52px;
+  mask-image:radial-gradient(ellipse 75% 65% at 50% 30%,#000 20%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 75% 65% at 50% 30%,#000 20%,transparent 80%);
+}
+.glow{position:fixed;border-radius:50%;filter:blur(140px);z-index:-4;pointer-events:none}
+.glow.a{width:640px;height:640px;background:#00ffc8;top:-280px;right:-220px;opacity:.12}
+.glow.b{width:560px;height:560px;background:#ff0055;bottom:-260px;left:-200px;opacity:.09}
+.glow.c{width:480px;height:480px;background:#9d7bff;top:40%;left:35%;opacity:.06}
+
+/* scanlines */
+.scanlines{
+  position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);
+  opacity:.35;mix-blend-mode:overlay;
+}
+.scanlines::after{
+  content:"";position:absolute;left:0;right:0;height:120px;
+  background:linear-gradient(180deg,transparent,rgba(0,255,200,.04),transparent);
+  animation:scanmove 8s linear infinite;
+}
+@keyframes scanmove{0%{top:-120px}100%{top:100%}}
+
+/* vignette */
+.vignette{
+  position:fixed;inset:0;z-index:9001;pointer-events:none;
+  background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.6) 100%);
+}
+
+/* ============== BOOT ============== */
+.boot{
+  position:fixed;inset:0;z-index:99999;background:var(--bg);
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  gap:12px;font-family:var(--mono);font-size:13px;padding:24px;
+  transition:opacity .8s ease,visibility .8s ease;
+}
+.boot.done{opacity:0;visibility:hidden}
+.boot .line{color:var(--mint);opacity:0;direction:ltr;text-align:left;letter-spacing:.4px}
+.boot .line:nth-child(1){animation:bootline .3s .15s forwards}
+.boot .line:nth-child(2){animation:bootline .3s .55s forwards}
+.boot .line:nth-child(3){animation:bootline .3s .95s forwards}
+.boot .line:nth-child(4){animation:bootline .3s 1.35s forwards;color:var(--red)}
+.boot .line:nth-child(5){animation:bootline .3s 1.75s forwards}
+.boot .line:nth-child(6){animation:bootline .3s 2.15s forwards;color:var(--red)}
+.boot .ok{color:var(--red);animation:bootline .3s 2.55s forwards;font-size:16px;letter-spacing:3px;text-shadow:0 0 20px var(--red)}
+@keyframes bootline{to{opacity:1}}
+.boot .cursor-block{display:inline-block;width:8px;height:14px;background:var(--mint);vertical-align:middle;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ============== NAV ============== */
+.nav{
+  position:fixed;top:0;right:0;left:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:16px 5vw;background:rgba(5,7,10,.55);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid transparent;transition:.35s;
+}
+.nav.scrolled{border-bottom-color:var(--line);background:rgba(5,7,10,.88)}
+.brand{
+  font-family:var(--display);font-weight:900;font-size:16px;letter-spacing:1px;
+  display:flex;align-items:center;gap:9px;direction:ltr;
+}
+.brand .skull{font-size:18px;filter:drop-shadow(0 0 8px var(--red));animation:skullpulse 2.2s ease-in-out infinite}
+@keyframes skullpulse{50%{transform:scale(1.12);filter:drop-shadow(0 0 16px var(--red))}}
+.brand b{color:#fff}
+.brand span{color:var(--mint);text-shadow:0 0 12px rgba(0,255,200,.5)}
+.nav-links{display:flex;gap:28px;font-size:14.5px;color:var(--muted)}
+.nav-links a{position:relative;transition:color .2s}
+.nav-links a::after{content:"";position:absolute;right:0;bottom:-6px;height:1.5px;width:0;background:var(--mint);transition:width .3s}
+.nav-links a:hover{color:#fff}
+.nav-links a:hover::after{width:100%}
+.nav-tools{display:flex;gap:10px;align-items:center}
+.audio-btn, .panic-btn{
+  font-family:var(--mono);font-size:11px;color:var(--mint);
+  border:1px solid var(--mint-dim);padding:6px 12px;border-radius:5px;
+  background:none;cursor:none;display:flex;align-items:center;gap:6px;
+  transition:.2s;direction:ltr;
+}
+.audio-btn:hover{border-color:var(--mint);box-shadow:0 0 18px rgba(0,255,200,.3)}
+.audio-btn.on{background:var(--mint);color:#031410}
+.panic-btn{border-color:var(--red);color:var(--red)}
+.panic-btn:hover{background:var(--red);color:#0a0004}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:0;cursor:none;padding:6px}
+.burger span{width:24px;height:2px;background:var(--text);transition:.3s}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ============== HERO ============== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:120px 5vw 80px;text-align:center;position:relative;
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-size:11.5px;letter-spacing:2px;
+  color:var(--red);border:1px solid rgba(255,0,85,.4);
+  padding:7px 16px;border-radius:100px;margin-bottom:34px;direction:ltr;
+  background:rgba(255,0,85,.04);
+}
+.kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3}}
+
+/* skull with eyes tracking */
+.skull-eq{
+  font-size:clamp(3rem,7vw,5rem);line-height:1;
+  margin-bottom:14px;position:relative;
+  filter:drop-shadow(0 0 30px var(--red));
+  animation:skullpulse 2.2s ease-in-out infinite;
+}
+.hero-name{
+  font-family:var(--display);font-weight:900;
+  font-size:clamp(2.4rem,10vw,8.5rem);
+  line-height:.95;letter-spacing:.02em;
+  position:relative;display:inline-block;color:#fff;
+  text-shadow:
+    0 0 22px rgba(0,255,200,.35),
+    0 0 60px rgba(0,255,200,.18),
+    0 0 120px rgba(0,255,200,.08);
+  animation:nameShiver .14s infinite;
+  will-change:transform;
+}
+@keyframes nameShiver{
+  0%{transform:translate(0,0) rotate(0deg)}
+  25%{transform:translate(-1px,1px) rotate(-.2deg)}
+  50%{transform:translate(1px,-1px) rotate(.15deg)}
+  75%{transform:translate(-1px,-1px) rotate(-.1deg)}
+  100%{transform:translate(1px,1px) rotate(.2deg)}
+}
+.hero-name::before, .hero-name::after{
+  content:attr(data-text);position:absolute;inset:0;
+  background:var(--bg);overflow:hidden;pointer-events:none;
+}
+.hero-name::before{color:var(--red);animation:glitchA 3.4s infinite steps(1);mix-blend-mode:screen;opacity:.85}
+.hero-name::after{color:var(--cyan);animation:glitchB 2.8s infinite steps(1);mix-blend-mode:screen;opacity:.85}
+@keyframes glitchA{
+  0%,88%,100%{clip-path:inset(0 0 100% 0);transform:translate(0)}
+  89%{clip-path:inset(10% 0 60% 0);transform:translate(-4px,0)}
+  91%{clip-path:inset(40% 0 30% 0);transform:translate(5px,0)}
+  93%{clip-path:inset(70% 0 5% 0);transform:translate(-3px,0)}
+  95%{clip-path:inset(20% 0 55% 0);transform:translate(4px,0)}
+  97%{clip-path:inset(60% 0 20% 0);transform:translate(-5px,0)}
+}
+@keyframes glitchB{
+  0%,90%,100%{clip-path:inset(100% 0 0 0);transform:translate(0)}
+  91%{clip-path:inset(55% 0 15% 0);transform:translate(5px,0)}
+  93%{clip-path:inset(15% 0 70% 0);transform:translate(-4px,0)}
+  95%{clip-path:inset(35% 0 40% 0);transform:translate(3px,0)}
+  97%{clip-path:inset(80% 0 5% 0);transform:translate(-5px,0)}
+}
+.skull-flank{
+  display:inline-block;font-family:var(--sans);
+  font-size:.55em;vertical-align:middle;margin:0 .12em;
+  filter:drop-shadow(0 0 14px var(--red));
+  animation:skullpulse 2.2s ease-in-out infinite;
+}
+.hero-sub{
+  font-family:var(--mono);font-size:clamp(12px,1.6vw,15px);
+  color:var(--red);direction:ltr;letter-spacing:2px;
+  margin:26px 0 18px;text-transform:uppercase;
+}
+.hero-sub .sep{color:var(--line-2);margin:0 10px}
+.hero-typer{
+  font-family:var(--mono);font-size:clamp(13px,1.7vw,17px);
+  color:var(--muted);direction:ltr;min-height:28px;margin-bottom:40px;
+}
+.hero-typer .prompt{color:var(--mint)}
+.typer-cursor{display:inline-block;width:9px;height:16px;background:var(--mint);vertical-align:-3px;animation:blink 1s steps(1) infinite}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn{
+  font-family:var(--mono);font-size:13.5px;padding:14px 28px;border-radius:6px;
+  transition:.25s;display:inline-flex;align-items:center;gap:10px;
+  direction:ltr;cursor:none;border:1px solid transparent;
+}
+.btn-primary{background:var(--mint);color:#031410;font-weight:700;border-color:var(--mint)}
+.btn-primary:hover{box-shadow:0 0 40px rgba(0,255,200,.5);transform:translateY(-2px)}
+.btn-ghost{border-color:var(--line-2);color:var(--text);background:rgba(255,255,255,.01)}
+.btn-ghost:hover{border-color:var(--mint);color:var(--mint)}
+.btn-danger{border-color:var(--red);color:var(--red);background:rgba(255,0,85,.04)}
+.btn-danger:hover{background:var(--red);color:#0a0004;box-shadow:0 0 40px rgba(255,0,85,.4)}
+
+.scroll-hint{
+  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:10.5px;color:var(--muted);
+  letter-spacing:3px;direction:ltr;display:flex;flex-direction:column;
+  align-items:center;gap:8px;
+}
+.scroll-hint .line{width:1px;height:38px;background:linear-gradient(180deg,var(--mint),transparent);animation:scrolldown 1.8s infinite}
+@keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ============== STATS ============== */
+.stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--bg-2),var(--bg));padding:54px 5vw}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1280px;margin:0 auto}
+.stat{text-align:center;position:relative}
+.stat:not(:last-child)::after{content:"";position:absolute;left:0;top:15%;height:70%;width:1px;background:linear-gradient(180deg,transparent,var(--line-2),transparent)}
+.stat .num{font-family:var(--mono);font-weight:700;font-size:clamp(1.9rem,3.6vw,2.9rem);color:#fff;line-height:1;display:flex;align-items:baseline;justify-content:center;gap:3px;direction:ltr}
+.stat .num .suf{color:var(--red);font-size:.55em}
+.stat .lbl{color:var(--muted);font-size:13.5px;margin-top:12px;font-family:var(--mono);letter-spacing:.5px}
+
+/* ============== SECTION ============== */
+section{padding:110px 5vw;position:relative}
+.wrap{max-width:1280px;margin:0 auto}
+.sec-head{margin-bottom:64px;max-width:720px}
+.sec-tag{font-family:var(--mono);font-size:11.5px;letter-spacing:3px;color:var(--red);direction:ltr;display:inline-block;margin-bottom:16px}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.7rem);font-weight:800;line-height:1.2;margin-bottom:16px}
+.sec-head h2 em{font-style:normal;color:var(--mint);text-shadow:0 0 26px rgba(0,255,200,.3)}
+.sec-head p{color:var(--muted);font-size:15.5px}
+
+/* ============== ARSENAL ============== */
+.arsenal{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.tool{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:12px;padding:24px 20px;position:relative;overflow:hidden;transition:.3s}
+.tool::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s;background:radial-gradient(circle at 100% 0%,rgba(255,0,85,.10),transparent 65%)}
+.tool:hover{border-color:rgba(255,0,85,.3);transform:translateY(-4px);box-shadow:0 20px 50px -30px rgba(255,0,85,.4)}
+.tool:hover::before{opacity:1}
+.tool .t-cat{font-family:var(--mono);font-size:10px;letter-spacing:1.5px;color:var(--muted);direction:ltr;margin-bottom:14px}
+.tool .t-name{font-family:var(--mono);font-weight:700;font-size:16.5px;color:#fff;direction:ltr;margin-bottom:8px;transition:color .25s}
+.tool:hover .t-name{color:var(--red)}
+.tool .t-desc{font-size:13px;color:var(--muted);line-height:1.6}
+.tool .t-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--mint);border:1px solid var(--mint-dim);padding:2px 8px;border-radius:4px;margin-top:14px;direction:ltr}
+
+/* ============== SKILLS ============== */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.skill{margin-bottom:26px}
+.skill-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:13px;direction:ltr}
+.skill-head .name{color:var(--text)}
+.skill-head .pct{color:var(--red);font-weight:700}
+.skill-bar{height:6px;background:var(--line);border-radius:10px;overflow:hidden;position:relative}
+.skill-fill{height:100%;width:0;background:linear-gradient(90deg,var(--mint-dim),var(--mint));border-radius:10px;transition:width 1.6s cubic-bezier(.2,.9,.3,1);box-shadow:0 0 12px rgba(0,255,200,.4);position:relative}
+.skill-fill::after{content:"";position:absolute;right:0;top:0;bottom:0;width:20px;background:linear-gradient(90deg,transparent,rgba(0,255,200,.6))}
+
+/* ============== TIMELINE ============== */
+.timeline{position:relative;padding-right:34px}
+.timeline::before{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--red),var(--line),transparent)}
+.tl-item{position:relative;padding-bottom:40px}
+.tl-item::before{content:"";position:absolute;right:-40px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--red);box-shadow:0 0 14px var(--red)}
+.tl-item .year{font-family:var(--mono);font-size:12px;color:var(--red);direction:ltr;letter-spacing:2px;margin-bottom:6px}
+.tl-item h4{font-size:17px;font-weight:700;margin-bottom:8px;color:#fff}
+.tl-item p{font-size:14px;color:var(--muted)}
+
+/* ============== TERMINAL ============== */
+.terminal-wrap{max-width:940px;margin:0 auto}
+.terminal{background:linear-gradient(180deg,#040709,#020405);border:1px solid rgba(255,0,85,.25);border-radius:12px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(255,0,85,.3),0 0 0 1px rgba(255,0,85,.08);font-family:var(--mono);font-size:13px;direction:ltr;text-align:left}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--panel-2);border-bottom:1px solid var(--line)}
+.term-bar .d{width:11px;height:11px;border-radius:50%}
+.term-bar .d.r{background:#ff5f57}
+.term-bar .d.y{background:#febc2e}
+.term-bar .d.g{background:#28c840}
+.term-bar .title{margin-left:14px;color:var(--muted);font-size:11.5px;letter-spacing:.5px}
+.term-bar .t-user{margin-left:auto;color:var(--red);font-size:11px}
+.term-body{padding:20px 18px;min-height:340px;max-height:440px;overflow-y:auto;color:#9fb3c4;line-height:1.85}
+.term-body::-webkit-scrollbar{width:6px}
+.term-body::-webkit-scrollbar-thumb{background:var(--line-2);border-radius:3px}
+.term-line{margin-bottom:2px;white-space:pre-wrap;word-break:break-word}
+.term-line.cmd{color:var(--mint)}
+.term-line.out{color:#9fb3c4}
+.term-line.err{color:var(--red)}
+.term-line.ok{color:var(--mint)}
+.term-line.warn{color:var(--amber)}
+.term-line.dim{color:#4d5f70}
+.term-line.ghost{color:var(--red);font-family:var(--horror);font-size:16px;letter-spacing:2px;text-shadow:0 0 10px var(--red)}
+.term-input-line{display:flex;align-items:center;gap:8px;margin-top:6px}
+.term-prompt{color:var(--mint);flex-shrink:0}
+.term-input{background:none;border:0;color:#fff;font-family:var(--mono);font-size:13px;flex:1;outline:none;caret-color:var(--mint);cursor:none}
+.term-hint{text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px;direction:ltr}
+.term-hint code{color:var(--red);background:rgba(255,0,85,.06);padding:1px 6px;border-radius:4px;border:1px solid rgba(255,0,85,.2)}
+
+/* ============== SCANNER ============== */
+.scanner{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:32px;position:relative;overflow:hidden}
+.scanner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 20px,rgba(255,0,85,.03) 20px,rgba(255,0,85,.03) 21px);pointer-events:none}
+.scanner-scan{position:relative;height:4px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin-bottom:24px;box-shadow:0 0 20px var(--red);animation:scannerMove 2.5s linear infinite;opacity:.7}
+@keyframes scannerMove{0%{transform:translateY(0)}50%{transform:translateY(80px)}100%{transform:translateY(0)}}
+.scanner output{display:block;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--mint);min-height:220px;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word}
+.scanner-output .ok{color:var(--mint)}
+.scanner-output .bad{color:var(--red)}
+.scanner-output .warn{color:var(--amber)}
+.scan-trigger{margin-top:22px}
+
+/* ============== WRITEUPS ============== */
+.ctf-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.writeup{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:12px;padding:26px;transition:.3s;position:relative;overflow:hidden;cursor:none}
+.writeup:hover{border-color:rgba(255,0,85,.3);transform:translateY(-3px);box-shadow:0 20px 50px -30px rgba(255,0,85,.4)}
+.writeup .w-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.writeup .w-cat{font-family:var(--mono);font-size:10.5px;letter-spacing:1.5px;color:var(--red);direction:ltr}
+.writeup .w-diff{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:4px;direction:ltr}
+.w-diff.hard{color:var(--red);background:rgba(255,0,85,.1);border:1px solid rgba(255,0,85,.3)}
+.w-diff.insane{color:var(--violet);background:rgba(157,123,255,.1);border:1px solid rgba(157,123,255,.3)}
+.w-diff.med{color:var(--amber);background:rgba(255,184,107,.1);border:1px solid rgba(255,184,107,.3)}
+.writeup h4{font-size:16.5px;font-weight:700;margin-bottom:8px;color:#fff;direction:ltr;text-align:left}
+.writeup p{font-size:13.5px;color:var(--muted);margin-bottom:16px}
+.writeup .w-meta{display:flex;gap:14px;font-family:var(--mono);font-size:11px;color:var(--muted);direction:ltr}
+.writeup .w-meta span{color:var(--mint)}
+
+/* ============== CONTACT ============== */
+.contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:start}
+.contact-info h2{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:800;margin-bottom:18px;line-height:1.2}
+.contact-info h2 em{font-style:normal;color:var(--red)}
+.contact-info p{color:var(--muted);margin-bottom:32px;max-width:420px}
+.contact-meta{display:flex;flex-direction:column;gap:16px;font-family:var(--mono);font-size:13px;direction:ltr;text-align:left}
+.contact-meta div{display:flex;align-items:center;gap:12px;color:var(--muted);transition:.2s}
+.contact-meta div:hover{color:var(--text)}
+.contact-meta span{color:var(--mint)}
+.contact-meta .ico{width:30px;height:30px;border-radius:6px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--mint);flex-shrink:0}
+.form{display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:8px}
+.field label{font-size:12px;color:var(--muted);font-family:var(--mono);direction:ltr;letter-spacing:.5px}
+.field input,.field textarea,.field select{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;color:var(--text);font-family:var(--sans);font-size:15px;transition:.25s;width:100%;cursor:none}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px rgba(255,0,85,.08)}
+.field textarea{resize:vertical;min-height:120px}
+.form .btn-primary{align-self:flex-start;margin-top:6px;background:var(--red);color:#fff;border-color:var(--red)}
+.form .btn-primary:hover{box-shadow:0 0 40px rgba(255,0,85,.5);transform:translateY(-2px)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,140px);background:var(--red);color:#fff;padding:14px 28px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;z-index:1000;transition:transform .4s cubic-bezier(.2,.9,.3,1.3);direction:ltr;box-shadow:0 20px 60px -20px rgba(255,0,85,.5)}
+.toast.show{transform:translate(-50%,0)}
+
+/* ============== FOOTER ============== */
+footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--bg-2)}
+.foot-wrap{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.foot-links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted);direction:ltr}
+.foot-links a:hover{color:var(--red)}
+.copy{color:#3f5061;font-size:12px;font-family:var(--mono);direction:ltr}
+
+/* ============== REVEAL ============== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ============== JUMPSCARE OVERLAY ============== */
+.jumpscare{
+  position:fixed;inset:0;z-index:999999;background:#000;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  opacity:0;visibility:hidden;transition:opacity .05s,visibility .05s;
+  pointer-events:none;
+}
+.jumpscare.fire{opacity:1;visibility:visible;pointer-events:auto}
+.jumpscare .skull-huge{
+  font-size:min(60vh,60vw);line-height:1;
+  filter:drop-shadow(0 0 80px var(--red)) drop-shadow(0 0 200px var(--red));
+  animation:jumpskull .8s ease-out;
+}
+@keyframes jumpskull{
+  0%{transform:scale(.1) rotate(-15deg);opacity:0}
+  30%{transform:scale(1.4) rotate(8deg);opacity:1}
+  60%{transform:scale(1) rotate(-4deg)}
+  100%{transform:scale(1.08) rotate(0)}
+}
+.jumpscare .msg{
+  font-family:var(--horror);color:var(--red);
+  font-size:clamp(2rem,7vw,5rem);letter-spacing:4px;
+  margin-top:20px;text-shadow:0 0 40px var(--red);
+  animation:msgShiver .08s infinite;
+}
+@keyframes msgShiver{
+  0%,100%{transform:translate(0,0)}
+  25%{transform:translate(-3px,2px)}
+  50%{transform:translate(2px,-3px)}
+  75%{transform:translate(-2px,-2px)}
+}
+
+/* ============== FLOATING WHISPERS ============== */
+.whisper{
+  position:fixed;font-family:var(--horror);
+  color:var(--red);font-size:22px;letter-spacing:2px;
+  pointer-events:none;z-index:9997;opacity:0;
+  text-shadow:0 0 20px var(--red),0 0 40px var(--red);
+  animation:whisperFloat 3.5s ease-out forwards;
+}
+@keyframes whisperFloat{
+  0%{opacity:0;transform:translateY(0) scale(.8)}
+  20%{opacity:.9;transform:translateY(-10px) scale(1)}
+  80%{opacity:.9;transform:translateY(-60px) scale(1.02)}
+  100%{opacity:0;transform:translateY(-90px) scale(.9)}
+}
+
+/* ============== MORSE BLOCK ============== */
+.morse-block{
+  background:linear-gradient(180deg,var(--panel),var(--bg-2));
+  border:1px solid var(--line);border-radius:14px;
+  padding:32px;max-width:760px;margin:40px auto 0;
+}
+.morse-block h3{font-family:var(--mono);font-size:14px;color:var(--red);letter-spacing:2px;margin-bottom:18px;direction:ltr;text-align:center}
+.morse-block .morse-input{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.morse-block input{
+  flex:1;min-width:200px;background:var(--bg);border:1px solid var(--line);border-radius:6px;
+  padding:12px 16px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none;cursor:none;
+  transition:.2s;
+}
+.morse-block input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,0,85,.08)}
+.morse-block button{
+  background:var(--red);color:#fff;border:0;padding:12px 22px;border-radius:6px;
+  font-family:var(--mono);font-size:13px;font-weight:700;cursor:none;transition:.2s;
+}
+.morse-block button:hover{box-shadow:0 0 30px rgba(255,0,85,.5)}
+.morse-out{
+  font-family:var(--mono);font-size:15px;color:var(--mint);
+  min-height:30px;padding:14px;background:var(--bg);border:1px solid var(--line);
+  border-radius:6px;direction:ltr;text-align:left;word-break:break-all;
+  line-height:1.8;
+}
+
+/* ============== RESPONSIVE ============== */
+@media (max-width:1100px){.arsenal{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:980px){
+  .nav-links{position:fixed;top:0;left:0;height:100vh;width:min(80vw,320px);background:var(--bg-2);flex-direction:column;justify-content:center;padding:60px 40px;gap:30px;font-size:18px;transform:translateX(-100%);transition:transform .4s ease;border-right:1px solid var(--line)}
+  .nav-links.open{transform:none}
+  .nav-tools{display:none}
+  .burger{display:flex}
+  .arsenal{grid-template-columns:repeat(2,1fr)}
+  .skills-grid{grid-template-columns:1fr;gap:0}
+  .contact-grid{grid-template-columns:1fr;gap:48px}
+  .ctf-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:40px 20px}
+  .stat:nth-child(2)::after{display:none}
+}
+@media (max-width:620px){
+  section{padding:80px 6vw}
+  .arsenal{grid-template-columns:1fr}
+  .hero{padding-top:110px}
+  .skull-flank{font-size:.5em}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .hero-name{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- BOOT -->
+<div class="boot" id="boot">
+  <div class="line">&gt; establishing encrypted tunnel...</div>
+  <div class="line">&gt; scanning for nearby devices...</div>
+  <div class="line">&gt; found 7 devices on your network</div>
+  <div class="line">&gt; unauthorized access attempt detected</div>
+  <div class="line">&gt; countermeasures: active</div>
+  <div class="line">&gt; are you sure you want to continue?</div>
+  <div class="ok">&gt; 💀 TOO LATE 💀</div>
+</div>
+
+<!-- BACKGROUND -->
+<canvas id="matrix"></canvas>
+<div class="grid-bg"></div>
+<div class="glow a"></div>
+<div class="glow b"></div>
+<div class="glow c"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- JUMPSCARE -->
+<div class="jumpscare" id="jumpscare">
+  <div class="skull-huge">💀</div>
+  <div class="msg" id="jumpscareMsg">BOO</div>
+</div>
+
+<!-- NAV -->
+<header class="nav" id="nav">
+  <a href="#top" class="brand"><span class="skull">💀</span><b>ABDO</b><span>SAAD</span></a>
+  <nav class="nav-links" id="navlinks">
+    <a href="#arsenal">الأدوات</a>
+    <a href="#scanner">الفحص</a>
+    <a href="#skills">المهارات</a>
+    <a href="#terminal">التيرمنال</a>
+    <a href="#writeups">الكتابات</a>
+    <a href="#contact">تواصل</a>
+  </nav>
+  <div class="nav-tools">
+    <button class="audio-btn" id="audioBtn" title="toggle sound">🔇 SOUND</button>
+    <button class="panic-btn" id="panicBtn" title="panic">⏻ PANIC</button>
+  </div>
+  <button class="burger" id="burger" aria-label="menu"><span></span><span></span><span></span></button>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="kicker"><span class="dot"></span>ACCESS RESTRICTED · LEVEL 0x00</div>
+    <div class="skull-eq">💀</div>
+    <h1 class="hero-name" data-text="ABDO SAAD">
+      <span class="skull-flank">💀</span>ABDO&nbsp;SAAD<span class="skull-flank">💀</span>
+    </h1>
+    <div class="hero-sub">
+      RED TEAM <span class="sep">//</span> EXPLOIT DEV <span class="sep">//</span> THREAT INTEL <span class="sep">//</span> CTF
+    </div>
+    <div class="hero-typer"><span class="prompt">abdo@root:~$</span> <span id="typer"></span><span class="typer-cursor"></span></div>
+    <div class="hero-actions">
+      <a href="#scanner" class="btn btn-danger">💀 افحص جهازك</a>
+      <a href="#terminal" class="btn btn-primary">افتح التيرمنال <span>→</span></a>
+      <a href="#writeups" class="btn btn-ghost">الكتابات</a>
+    </div>
+    <div class="scroll-hint"><span>DON'T BLINK</span><span class="line"></span></div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="num"><span class="count" data-to="247">0</span><span class="suf">+</span></div><div class="lbl">PENTEST COMPLETED</div></div>
+      <div class="stat reveal"><div class="num"><span class="count" data-to="1842">0</span><span class="suf">+</span></div><div class="lbl">CVE / VULNS FOUND</div></div>
+      <div class="stat reveal"><div class="num"><span class="count" data-to="64">0</span><span class="suf">CTF</span></div><div class="lbl">CTF WINS</div></div>
+      <div class="stat reveal"><div class="num"><span class="count" data-to="99">0</span><span class="suf">%</span></div><div class="lbl">CLIENT TRUST</div></div>
+    </div>
+  </section>
+
+  <!-- ARSENAL -->
+  <section id="arsenal">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// ARSENAL</span>
+        <h2>أدوات <em>المعركة</em></h2>
+        <p>كل أداة على هذه القائمة استخدمتها فعلياً في بيئات مصرّح لها.</p>
+      </div>
+      <div class="arsenal">
+        <div class="tool reveal"><div class="t-cat">RECON</div><div class="t-name">Nmap</div><div class="t-desc">مسح شامل للشبكات والخدمات، كشف البصمات.</div><div class="t-tag">port scan</div></div>
+        <div class="tool reveal"><div class="t-cat">RECON</div><div class="t-name">Amass</div><div class="t-desc">تعداد النطاقات الفرعية وOSINT على DNS.</div><div class="t-tag">subdomain</div></div>
+        <div class="tool reveal"><div class="t-cat">WEB</div><div class="t-name">Burp Suite</div><div class="t-desc">اعتراض وتعديل كل طلب HTTP.</div><div class="t-tag">proxy</div></div>
+        <div class="tool reveal"><div class="t-cat">WEB</div><div class="t-name">ffuf</div><div class="t-desc">Fuzzing سريع للمسارات وendpoints المخفية.</div><div class="t-tag">fuzzing</div></div>
+        <div class="tool reveal"><div class="t-cat">EXPLOIT</div><div class="t-name">Metasploit</div><div class="t-desc">منصة استغلال جاهزة، تنفيذ payloads.</div><div class="t-tag">exploit</div></div>
+        <div class="tool reveal"><div class="t-cat">EXPLOIT</div><div class="t-name">pwntools</div><div class="t-desc">exploits بايثون — ROP، shellcode.</div><div class="t-tag">pwn</div></div>
+        <div class="tool reveal"><div class="t-cat">REVERSE</div><div class="t-name">Ghidra</div><div class="t-desc">هندسة عكسية مجانية من NSA.</div><div class="t-tag">reverse</div></div>
+        <div class="tool reveal"><div class="t-cat">REVERSE</div><div class="t-name">IDA Pro</div><div class="t-desc">المعيار الذهبي في disassembly.</div><div class="t-tag">disasm</div></div>
+        <div class="tool reveal"><div class="t-cat">NETWORK</div><div class="t-name">Wireshark</div><div class="t-desc">تحليل كل بايت على الشبكة.</div><div class="t-tag">pcap</div></div>
+        <div class="tool reveal"><div class="t-cat">C2</div><div class="t-name">Sliver</div><div class="t-desc">C2 framework حديث مفتوح المصدر.</div><div class="t-tag">c2</div></div>
+        <div class="tool reveal"><div class="t-cat">CLOUD</div><div class="t-name">Pacu</div><div class="t-desc">استغلال إعدادات AWS الخاطئة.</div><div class="t-tag">aws</div></div>
+        <div class="tool reveal"><div class="t-cat">OSINT</div><div class="t-name">Maltego</div><div class="t-desc">رسم شبكات العلاقات بين كيانات OSINT.</div><div class="t-tag">intel</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCANNER -->
+  <section id="scanner">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// LIVE SCANNER</span>
+        <h2>افحص <em>جهازك</em> الآن</h2>
+        <p>اضغط الزر — الفحص شغال فعلاً. كل نتيجة تظهر أمامك مبنية على بيانات متصفحك الحقيقية.</p>
+      </div>
+      <div class="scanner reveal">
+        <div class="scanner-scan"></div>
+        <pre class="scanner-output" id="scannerOut">// idle — press SCAN to begin</pre>
+        <button class="btn btn-danger scan-trigger" id="scanBtn">▶ بدء الفحص</button>
+      </div>
+
+      <!-- MORSE -->
+      <div class="morse-block reveal">
+        <h3>// MORSE ENCODER — اكتب رسالة سرية</h3>
+        <div class="morse-input">
+          <input type="text" id="morseIn" placeholder="type anything..." maxlength="80" />
+          <button id="morseBtn">ENCODE</button>
+        </div>
+        <div class="morse-out" id="morseOut">// waiting for input</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// CAPABILITIES</span>
+        <h2>مستوى <em>الاحتراف</em></h2>
+        <p>أرقام مبنية على سنوات من العمل الميداني.</p>
+      </div>
+      <div class="skills-grid">
+        <div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Red Teaming</span><span class="pct">96%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="96"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Web App Pentest</span><span class="pct">98%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="98"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Exploit Development</span><span class="pct">88%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="88"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Reverse Engineering</span><span class="pct">85%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="85"></div></div></div>
+        </div>
+        <div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Network Pentest</span><span class="pct">94%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="94"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Cloud Security</span><span class="pct">90%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="90"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Malware Analysis</span><span class="pct">82%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="82"></div></div></div>
+          <div class="skill reveal"><div class="skill-head"><span class="name">Scripting (Py/C/C++)</span><span class="pct">95%</span></div><div class="skill-bar"><div class="skill-fill" data-pct="95"></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TERMINAL -->
+  <section id="terminal">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// INTERACTIVE SHELL</span>
+        <h2>تحدّث <em>مباشرة</em></h2>
+        <p>اكتب أمراً في التيرمنال — كل شيء هنا حيّ. جرّب <code style="color:var(--red)">help</code>، <code style="color:var(--red)">whoami</code>، أو <code style="color:var(--red)">ghost</code>.</p>
+      </div>
+      <div class="terminal-wrap reveal">
+        <div class="terminal">
+          <div class="term-bar">
+            <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+            <span class="title">abdo@hexward — zsh</span>
+            <span class="t-user">💀 root</span>
+          </div>
+          <div class="term-body" id="termBody">
+            <div class="term-line dim">Type 'help' to see available commands.</div>
+            <div class="term-line dim">━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━ ━</div>
+          </div>
+          <div style="padding:0 18px 18px">
+            <div class="term-input-line">
+              <span class="term-prompt">abdo@root:~$</span>
+              <input type="text" class="term-input" id="termInput" autocomplete="off" spellcheck="false" />
+            </div>
+          </div>
+        </div>
+        <div class="term-hint">Try: <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>nmap</code> · <code>hack</code> · <code>ghost</code> · <code>scream</code> · <code>scare</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WRITEUPS -->
+  <section id="writeups">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// WRITEUPS & CTF</span>
+        <h2>غرف <em>محلولة</em></h2>
+        <p>مقتطفات من كتاباتي في CTF والتحليل التقني.</p>
+      </div>
+      <div class="ctf-grid">
+        <div class="writeup reveal">
+          <div class="w-top"><span class="w-cat">PWN · HEAP</span><span class="w-diff hard">HARD</span></div>
+          <h4>House of Force — From Zero to Shell</h4>
+          <p>شرح تفصيلي لاستغلال ثغرة heap overflow عبر House of Force، مع ROP chain كاملة.</p>
+          <div class="w-meta"><span>⭐</span> 1.2k reads <span>⏱</span> 24 min</div>
+        </div>
+        <div class="writeup reveal">
+          <div class="w-top"><span class="w-cat">WEB · SSRF</span><span class="w-diff med">MED</span></div>
+          <h4>SSRF to AWS Metadata — Full Chain</h4>
+          <p>من SSRF بسيط إلى قراءة credentials كاملة في IMDSv1، إلى تصعيد صلاحيات.</p>
+          <div class="w-meta"><span>⭐</span> 3.4k reads <span>⏱</span> 18 min</div>
+        </div>
+        <div class="writeup reveal">
+          <div class="w-top"><span class="w-cat">REVERSE · ANTI-DEBUG</span><span class="w-diff insane">INSANE</span></div>
+          <h4>Bypassing Anti-Debug in a Ransomware Sample</h4>
+          <p>تحليل عينة ransomware حديثة، فك الـpacker، وتجاوز anti-debug.</p>
+          <div class="w-meta"><span>⭐</span> 890 reads <span>⏱</span> 32 min</div>
+        </div>
+        <div class="writeup reveal">
+          <div class="w-top"><span class="w-cat">AD · KERBEROS</span><span class="w-diff hard">HARD</span></div>
+          <h4>Kerberoasting — A Complete Attack Path</h4>
+          <p>من enumeration في Active Directory إلى استخراج TGS tickets وكسرها offline.</p>
+          <div class="w-meta"><span>⭐</span> 2.1k reads <span>⏱</span> 21 min</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="wrap contact-grid">
+      <div class="contact-info reveal">
+        <span class="sec-tag">// SECURE CHANNEL</span>
+        <h2>تواصل <em>معي</em> — بأمان</h2>
+        <p>لاستشارات أمنية، مشاريع red team، أو مجرد سؤال تقني.</p>
+        <div class="contact-meta">
+          <div><span class="ico">@</span><span>abdo@hexward.io</span></div>
+          <div><span class="ico">☎</span><span>+20 100 000 0000</span></div>
+          <div><span class="ico">🔑</span><span>PGP: 4096R / 0xABDOSAAD</span></div>
+          <div><span class="ico">📍</span><span>Cairo · Dubai · Remote</span></div>
+        </div>
+      </div>
+      <form class="form reveal" id="form" novalidate>
+        <div class="field"><label for="name">// NAME</label><input id="name" name="name" type="text" placeholder="اسمك الكامل" required /></div>
+        <div class="field"><label for="email">// EMAIL</label><input id="email" name="email" type="email" placeholder="you@company.com" required /></div>
+        <div class="field"><label for="scope">// REQUEST TYPE</label>
+          <select id="scope" name="scope">
+            <option>Red Team Engagement</option>
+            <option>Web App Pentest</option>
+            <option>Exploit Development</option>
+            <option>Threat Intel</option>
+            <option>CTF / Collaboration</option>
+          </select>
+        </div>
+        <div class="field"><label for="msg">// MESSAGE</label><textarea id="msg" name="msg" placeholder="اكتب رسالتك هنا..." required></textarea></div>
+        <button type="submit" class="btn btn-primary">إرسال آمن <span>→</span></button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot-wrap">
+    <a href="#top" class="brand"><span class="skull">💀</span><b>ABDO</b><span>SAAD</span></a>
+    <div class="foot-links">
+      <a href="#arsenal">Arsenal</a>
+      <a href="#scanner">Scanner</a>
+      <a href="#terminal">Shell</a>
+      <a href="#writeups">Writeups</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="copy">© 2024 ABDO SAAD · i saw you</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">// secure message queued — reply within 48h</div>
+
+<script>
+/* ============================================================
+   BOOT
+   ============================================================ */
+window.addEventListener('load', () => {
+  setTimeout(() => document.getElementById('boot').classList.add('done'), 3000);
+});
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  document.getElementById('boot').classList.add('done');
+}
+
+/* ============================================================
+   CURSOR + BLOOD
+   ============================================================ */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+  if(Math.random() < 0.06) spawnBlood(mx, my);
+});
+(function follow(){
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+  requestAnimationFrame(follow);
+})();
+document.querySelectorAll('a,button,input,textarea,select,.tool,.writeup').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('hover'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
+});
+function spawnBlood(x, y){
+  const d = document.createElement('div');
+  d.className = 'blood-drop';
+  d.style.left = (x + (Math.random()*8-4)) + 'px';
+  d.style.top = y + 'px';
+  document.body.appendChild(d);
+  setTimeout(() => d.remove(), 800);
+}
+
+/* ============================================================
+   MATRIX
+   ============================================================ */
+(function matrix(){
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+  let w, h, cols, drops;
+  const chars = 'アイウエオカキクケコ0123456789ABCDEF#$%*+<>|';
+  function resize(){
+    w = canvas.width = innerWidth;
+    h = canvas.height = innerHeight;
+    cols = Math.floor(w / 16);
+    drops = Array(cols).fill(1).map(() => Math.random() * h / 16);
+  }
+  function draw(){
+    ctx.fillStyle = 'rgba(5,7,10,0.08)';
+    ctx.fillRect(0,0,w,h);
+    ctx.font = '13px monospace';
+    for(let i = 0; i < cols; i++){
+      const txt = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillStyle = Math.random() > 0.96 ? '#ff0055' : '#0a5a4a';
+      ctx.fillText(txt, i * 16, drops[i] * 16);
+      if(drops[i] * 16 > h && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    }
+  }
+  resize();
+  addEventListener('resize', resize);
+  let last = 0;
+  function loop(t){
+    if(t - last > 50){ draw(); last = t; }
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+
+/* ============================================================
+   NAV
+   ============================================================ */
+const nav = document.getElementById('nav');
+addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20));
+const burger = document.getElementById('burger');
+const navlinks = document.getElementById('navlinks');
+burger.addEventListener('click', () => {
+  burger.classList.toggle('open');
+  navlinks.classList.toggle('open');
+});
+navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  burger.classList.remove('open');
+  navlinks.classList.remove('open');
+}));
+
+/* ============================================================
+   AUDIO ENGINE
+   ============================================================ */
+let audioOn = false;
+let audioCtx = null;
+
+function initAudio(){
+  if(audioCtx) return;
+  audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function tone(freq, dur, type='sine', vol=0.15, delay=0){
+  if(!audioOn || !audioCtx) return;
+  const t = audioCtx.currentTime + delay;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, t);
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(vol, t + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + dur);
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.start(t); osc.stop(t + dur + 0.05);
+}
+
+function heartbeat(){
+  if(!audioOn) return;
+  tone(60, 0.18, 'sine', 0.25, 0);
+  tone(45, 0.25, 'sine', 0.20, 0.22);
+}
+
+function glitchSound(){
+  if(!audioOn || !audioCtx) return;
+  const dur = 0.15;
+  const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for(let i = 0; i < data.length; i++){
+    data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+  }
+  const src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  const g = audioCtx.createGain();
+  g.gain.value = 0.08;
+  src.connect(g); g.connect(audioCtx.destination);
+  src.start();
+}
+
+function whisperSound(){
+  if(!audioOn || !audioCtx) return;
+  const dur = 0.9;
+  const buffer = audioCtx.createBuffer(1, audioCtx.sampleRate * dur, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for(let i = 0; i < data.length; i++){
+    const env = Math.sin(Math.PI * i / data.length);
+    data[i] = (Math.random() * 2 - 1) * env * 0.4;
+  }
+  const src = audioCtx.createBufferSource();
+  src.buffer = buffer;
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'bandpass';
+  filter.frequency.value = 1800;
+  filter.Q.value = 4;
+  const g = audioCtx.createGain();
+  g.gain.value = 0.12;
+  src.connect(filter); filter.connect(g); g.connect(audioCtx.destination);
+  src.start();
+}
+
+function screamSound(){
+  if(!audioOn || !audioCtx) return;
+  const t = audioCtx.currentTime;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(440, t);
+  osc.frequency.exponentialRampToValueAtTime(110, t + 0.6);
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(0.18, t + 0.02);
+  gain.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.start(t); osc.stop(t + 0.75);
+}
+
+const audioBtn = document.getElementById('audioBtn');
+audioBtn.addEventListener('click', () => {
+  initAudio();
+  audioOn = !audioOn;
+  audioBtn.classList.toggle('on', audioOn);
+  audioBtn.textContent = audioOn ? '🔊 SOUND' : '🔇 SOUND';
+  if(audioOn) tone(880, 0.1, 'sine', 0.1);
+});
+
+// heartbeat loop
+setInterval(() => {
+  if(audioOn && Math.random() < 0.5) heartbeat();
+}, 1400);
+
+/* ============================================================
+   JUMPSCARE
+   ============================================================ */
+const jumpscare = document.getElementById('jumpscare');
+const jumpscareMsg = document.getElementById('jumpscareMsg');
+const scareWords = ['BOO', 'I SEE YOU', 'TOO LATE', 'RUN', 'BEHIND YOU', 'DON\'T LOOK', 'HELLO', '404 NOT ALIVE'];
+let lastScare = 0;
+
+function fireJumpscare(){
+  const now = Date.now();
+  if(now - lastScare < 15000) return;
+  lastScare = now;
+  jumpscareMsg.textContent = scareWords[Math.floor(Math.random() * scareWords.length)];
+  jumpscare.classList.add('fire');
+  screamSound();
+  glitchSound();
+  setTimeout(() => jumpscare.classList.remove('fire'), 800);
+}
+
+// random jumpscares
+setInterval(() => {
+  if(Math.random() < 0.05) fireJumpscare();
+}, 8000);
+
+/* ============================================================
+   WHISPERS
+   ============================================================ */
+const whisperWords = ['behind you', 'i see you', 'run
