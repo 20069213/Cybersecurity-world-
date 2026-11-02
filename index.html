@@ -84,7 +84,6 @@ a{color:inherit;text-decoration:none}
 .glow.b{width:560px;height:560px;background:#ff0055;bottom:-260px;left:-200px;opacity:.09}
 .glow.c{width:480px;height:480px;background:#9d7bff;top:40%;left:35%;opacity:.06}
 
-/* scanlines */
 .scanlines{
   position:fixed;inset:0;z-index:9000;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);
@@ -97,31 +96,35 @@ a{color:inherit;text-decoration:none}
 }
 @keyframes scanmove{0%{top:-120px}100%{top:100%}}
 
-/* vignette */
 .vignette{
   position:fixed;inset:0;z-index:9001;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.6) 100%);
 }
 
-/* ============== BOOT ============== */
+/* ============== BOOT (سريع دلوقتي) ============== */
 .boot{
   position:fixed;inset:0;z-index:99999;background:var(--bg);
   display:flex;flex-direction:column;justify-content:center;align-items:center;
   gap:12px;font-family:var(--mono);font-size:13px;padding:24px;
-  transition:opacity .8s ease,visibility .8s ease;
+  transition:opacity .6s ease,visibility .6s ease;
+  cursor:pointer;
 }
-.boot.done{opacity:0;visibility:hidden}
+.boot.done{opacity:0;visibility:hidden;pointer-events:none}
 .boot .line{color:var(--mint);opacity:0;direction:ltr;text-align:left;letter-spacing:.4px}
-.boot .line:nth-child(1){animation:bootline .3s .15s forwards}
-.boot .line:nth-child(2){animation:bootline .3s .55s forwards}
-.boot .line:nth-child(3){animation:bootline .3s .95s forwards}
-.boot .line:nth-child(4){animation:bootline .3s 1.35s forwards;color:var(--red)}
-.boot .line:nth-child(5){animation:bootline .3s 1.75s forwards}
-.boot .line:nth-child(6){animation:bootline .3s 2.15s forwards;color:var(--red)}
-.boot .ok{color:var(--red);animation:bootline .3s 2.55s forwards;font-size:16px;letter-spacing:3px;text-shadow:0 0 20px var(--red)}
+.boot .line:nth-child(1){animation:bootline .2s .05s forwards}
+.boot .line:nth-child(2){animation:bootline .2s .2s forwards}
+.boot .line:nth-child(3){animation:bootline .2s .35s forwards}
+.boot .line:nth-child(4){animation:bootline .2s .5s forwards;color:var(--red)}
+.boot .line:nth-child(5){animation:bootline .2s .65s forwards}
+.boot .line:nth-child(6){animation:bootline .2s .8s forwards;color:var(--red)}
+.boot .ok{color:var(--red);animation:bootline .2s .95s forwards;font-size:16px;letter-spacing:3px;text-shadow:0 0 20px var(--red)}
 @keyframes bootline{to{opacity:1}}
 .boot .cursor-block{display:inline-block;width:8px;height:14px;background:var(--mint);vertical-align:middle;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
+.boot .skip-hint{
+  position:absolute;bottom:30px;color:var(--muted);font-size:11px;
+  letter-spacing:2px;animation:blink 2s steps(1) infinite;
+}
 
 /* ============== NAV ============== */
 .nav{
@@ -177,7 +180,6 @@ a{color:inherit;text-decoration:none}
 .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.3}}
 
-/* skull with eyes tracking */
 .skull-eq{
   font-size:clamp(3rem,7vw,5rem);line-height:1;
   margin-bottom:14px;position:relative;
@@ -304,15 +306,6 @@ section{padding:110px 5vw;position:relative}
 .skill-fill{height:100%;width:0;background:linear-gradient(90deg,var(--mint-dim),var(--mint));border-radius:10px;transition:width 1.6s cubic-bezier(.2,.9,.3,1);box-shadow:0 0 12px rgba(0,255,200,.4);position:relative}
 .skill-fill::after{content:"";position:absolute;right:0;top:0;bottom:0;width:20px;background:linear-gradient(90deg,transparent,rgba(0,255,200,.6))}
 
-/* ============== TIMELINE ============== */
-.timeline{position:relative;padding-right:34px}
-.timeline::before{content:"";position:absolute;right:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--red),var(--line),transparent)}
-.tl-item{position:relative;padding-bottom:40px}
-.tl-item::before{content:"";position:absolute;right:-40px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--red);box-shadow:0 0 14px var(--red)}
-.tl-item .year{font-family:var(--mono);font-size:12px;color:var(--red);direction:ltr;letter-spacing:2px;margin-bottom:6px}
-.tl-item h4{font-size:17px;font-weight:700;margin-bottom:8px;color:#fff}
-.tl-item p{font-size:14px;color:var(--muted)}
-
 /* ============== TERMINAL ============== */
 .terminal-wrap{max-width:940px;margin:0 auto}
 .terminal{background:linear-gradient(180deg,#040709,#020405);border:1px solid rgba(255,0,85,.25);border-radius:12px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(255,0,85,.3),0 0 0 1px rgba(255,0,85,.08);font-family:var(--mono);font-size:13px;direction:ltr;text-align:left}
@@ -398,7 +391,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 
-/* ============== JUMPSCARE OVERLAY ============== */
+/* ============== JUMPSCARE ============== */
 .jumpscare{
   position:fixed;inset:0;z-index:999999;background:#000;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -430,7 +423,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   75%{transform:translate(-2px,-2px)}
 }
 
-/* ============== FLOATING WHISPERS ============== */
+/* ============== WHISPERS ============== */
 .whisper{
   position:fixed;font-family:var(--horror);
   color:var(--red);font-size:22px;letter-spacing:2px;
@@ -445,7 +438,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   100%{opacity:0;transform:translateY(-90px) scale(.9)}
 }
 
-/* ============== MORSE BLOCK ============== */
+/* ============== MORSE ============== */
 .morse-block{
   background:linear-gradient(180deg,var(--panel),var(--bg-2));
   border:1px solid var(--line);border-radius:14px;
@@ -508,6 +501,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   <div class="line">&gt; countermeasures: active</div>
   <div class="line">&gt; are you sure you want to continue?</div>
   <div class="ok">&gt; 💀 TOO LATE 💀</div>
+  <div class="skip-hint">[ tap to skip ]</div>
 </div>
 
 <!-- BACKGROUND -->
@@ -617,7 +611,6 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
         <button class="btn btn-danger scan-trigger" id="scanBtn">▶ بدء الفحص</button>
       </div>
 
-      <!-- MORSE -->
       <div class="morse-block reveal">
         <h3>// MORSE ENCODER — اكتب رسالة سرية</h3>
         <div class="morse-input">
@@ -774,13 +767,18 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
 
 <script>
 /* ============================================================
-   BOOT
+   BOOT — FIXED (DOMContentLoaded + click to skip + 1.8s)
    ============================================================ */
-window.addEventListener('load', () => {
-  setTimeout(() => document.getElementById('boot').classList.add('done'), 3000);
+document.addEventListener('DOMContentLoaded', () => {
+  const boot = document.getElementById('boot');
+  boot.addEventListener('click', () => boot.classList.add('done'));
+  setTimeout(() => boot.classList.add('done'), 1800);
 });
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){
-  document.getElementById('boot').classList.add('done');
+  document.addEventListener('DOMContentLoaded', () => {
+    const b = document.getElementById('boot');
+    if(b) b.classList.add('done');
+  });
 }
 
 /* ============================================================
@@ -866,7 +864,7 @@ navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
 }));
 
 /* ============================================================
-   AUDIO ENGINE
+   AUDIO
    ============================================================ */
 let audioOn = false;
 let audioCtx = null;
@@ -957,7 +955,6 @@ audioBtn.addEventListener('click', () => {
   if(audioOn) tone(880, 0.1, 'sine', 0.1);
 });
 
-// heartbeat loop
 setInterval(() => {
   if(audioOn && Math.random() < 0.5) heartbeat();
 }, 1400);
@@ -981,7 +978,6 @@ function fireJumpscare(){
   setTimeout(() => jumpscare.classList.remove('fire'), 800);
 }
 
-// random jumpscares
 setInterval(() => {
   if(Math.random() < 0.05) fireJumpscare();
 }, 8000);
@@ -989,4 +985,427 @@ setInterval(() => {
 /* ============================================================
    WHISPERS
    ============================================================ */
-const whisperWords = ['behind you', 'i see you', 'run
+const whisperWords = ['behind you', 'i see you', 'run', 'don\'t look back', 'we are here', 'hello', 'too late', 'look up', 'right there'];
+function spawnWhisper(){
+  const w = document.createElement('div');
+  w.className = 'whisper';
+  w.textContent = whisperWords[Math.floor(Math.random() * whisperWords.length)];
+  w.style.left = (Math.random() * (innerWidth - 200)) + 'px';
+  w.style.top = (Math.random() * (innerHeight - 100) + 50) + 'px';
+  document.body.appendChild(w);
+  if(Math.random() < 0.4) whisperSound();
+  setTimeout(() => w.remove(), 3600);
+}
+setInterval(() => {
+  if(document.visibilityState === 'visible' && Math.random() < 0.35) spawnWhisper();
+}, 7000);
+
+/* ============================================================
+   HERO TYPER
+   ============================================================ */
+const phrases = [
+  'root@abdo:~$ whoami',
+  'red team · pentest · exploit dev',
+  'breaking things so they can be fixed',
+  'CTF @ DEF CON finalist',
+  'if it has an IP, it can be hacked.',
+  'i know where you live',
+  'your webcam led is on',
+  'don\'t look behind you'
+];
+const typerEl = document.getElementById('typer');
+let pi = 0, ci = 0, deleting = false;
+function typeLoop(){
+  const word = phrases[pi];
+  if(!deleting){
+    ci++;
+    typerEl.textContent = word.slice(0, ci);
+    if(ci === word.length){ deleting = true; return setTimeout(typeLoop, 1800); }
+  } else {
+    ci--;
+    typerEl.textContent = word.slice(0, ci);
+    if(ci === 0){ deleting = false; pi = (pi + 1) % phrases.length; return setTimeout(typeLoop, 500); }
+  }
+  setTimeout(typeLoop, deleting ? 28 : 58);
+}
+typeLoop();
+
+/* ============================================================
+   REVEAL + SKILLS + COUNTERS
+   ============================================================ */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+}, {threshold: 0.14});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const skillIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.width = e.target.dataset.pct + '%';
+      skillIO.unobserve(e.target);
+    }
+  });
+}, {threshold: 0.4});
+document.querySelectorAll('.skill-fill').forEach(el => skillIO.observe(el));
+
+const countIO = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target;
+    const to = +el.dataset.to;
+    const dur = 1700;
+    const start = performance.now();
+    function tick(now){
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(to * eased).toLocaleString('en-US');
+      if(p < 1) requestAnimationFrame(tick);
+      else el.textContent = to.toLocaleString('en-US');
+    }
+    requestAnimationFrame(tick);
+    countIO.unobserve(el);
+  });
+}, {threshold: 0.5});
+document.querySelectorAll('.count').forEach(el => countIO.observe(el));
+
+/* ============================================================
+   SCANNER
+   ============================================================ */
+const scannerOut = document.getElementById('scannerOut');
+const scanBtn = document.getElementById('scanBtn');
+
+async function getIP(){
+  try {
+    const r = await fetch('https://api.ipify.org?format=json', {cache:'no-store'});
+    return (await r.json()).ip;
+  } catch { return '127.0.0.1'; }
+}
+
+function detectOS(){
+  const ua = navigator.userAgent;
+  if(/Windows NT 10/.test(ua)) return 'Windows 10/11';
+  if(/Windows/.test(ua)) return 'Windows';
+  if(/Mac OS X/.test(ua)) return 'macOS';
+  if(/Android/.test(ua)) return 'Android';
+  if(/iPhone|iPad/.test(ua)) return 'iOS';
+  if(/Linux/.test(ua)) return 'Linux';
+  return 'Unknown';
+}
+
+function detectBrowser(){
+  const ua = navigator.userAgent;
+  if(/Edg\//.test(ua)) return 'Edge';
+  if(/Chrome\//.test(ua) && !/Edg\//.test(ua)) return 'Chrome';
+  if(/Firefox\//.test(ua)) return 'Firefox';
+  if(/Safari\//.test(ua) && !/Chrome/.test(ua)) return 'Safari';
+  return 'Unknown';
+}
+
+function delay(ms){ return new Promise(r => setTimeout(r, ms)); }
+
+async function runScan(){
+  scanBtn.disabled = true;
+  scanBtn.textContent = '⏳ جاري الفحص...';
+  scannerOut.textContent = '';
+  glitchSound();
+
+  const ip = await getIP();
+  const lines = [
+    ['[+] initializing scan engine v3.7.1', 'ok', 200],
+    ['[+] target identified: ' + ip, 'ok', 300],
+    ['[+] resolving hostname...', 'warn', 350],
+    ['    hostname: ' + (location.hostname || 'localhost'), 'ok', 200],
+    ['[+] OS fingerprint: ' + detectOS(), 'ok', 300],
+    ['[+] browser: ' + detectBrowser() + ' / ' + (navigator.language || 'en'), 'ok', 250],
+    ['[+] screen: ' + screen.width + 'x' + screen.height + ' (' + screen.colorDepth + '-bit)', 'ok', 280],
+    ['[+] cpu threads: ' + (navigator.hardwareConcurrency || 'unknown'), 'ok', 280],
+    ['[+] timezone: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || '?'), 'ok', 260],
+    ['[+] session start: ' + new Date().toLocaleString(), 'ok', 300],
+    ['', 'out', 200],
+    ['[!] analyzing attack surface...', 'warn', 500],
+    ['[!] checking port 22 (ssh)...... OPEN', 'bad', 300],
+    ['[!] checking port 80 (http)..... OPEN', 'bad', 280],
+    ['[!] checking port 443 (https)... OPEN', 'bad', 280],
+    ['[!] checking port 8080......... CLOSED', 'ok', 280],
+    ['', 'out', 200],
+    ['[!] scanning browser extensions...', 'warn', 400],
+    ['[!] checking cookies...', 'warn', 300],
+    ['[!] attempting to access webcam...', 'bad', 400],
+    ['[X] ACCESS DENIED — permission required', 'err', 400],
+    ['[!] attempting to access microphone...', 'bad', 400],
+    ['[X] ACCESS DENIED — permission required', 'err', 400],
+    ['[!] attempting location access...', 'bad', 400],
+    ['[X] ACCESS DENIED — permission required', 'err', 400],
+    ['', 'out', 200],
+    ['[+] scan complete — 1 host analyzed', 'ok', 300],
+    ['[!] you have been logged 💀', 'ghost', 500],
+    ['[!] abdo.saad is now watching this session', 'ghost', 400],
+  ];
+
+  for(const [text, cls, ms] of lines){
+    await delay(ms);
+    const div = document.createElement('div');
+    div.className = 'term-line ' + cls;
+    div.textContent = text;
+    scannerOut.appendChild(div);
+    if(audioOn && Math.random() < 0.3) tone(600 + Math.random()*600, 0.05, 'square', 0.04);
+  }
+
+  scanBtn.disabled = false;
+  scanBtn.textContent = '▶ إعادة الفحص';
+  if(Math.random() < 0.5) fireJumpscare();
+}
+
+scanBtn.addEventListener('click', runScan);
+
+/* ============================================================
+   MORSE
+   ============================================================ */
+const MORSE = {
+  'A':'.-','B':'-...','C':'-.-.','D':'-..','E':'.','F':'..-.','G':'--.','H':'....','I':'..','J':'.---',
+  'K':'-.-','L':'.-..','M':'--','N':'-.','O':'---','P':'.--.','Q':'--.-','R':'.-.','S':'...','T':'-',
+  'U':'..-','V':'...-','W':'.--','X':'-..-','Y':'-.--','Z':'--..',
+  '0':'-----','1':'.----','2':'..---','3':'...--','4':'....-','5':'.....','6':'-....','7':'--...','8':'---..','9':'----.',
+  ' ':'/','.':'.-.-.-',',':'--..--','?':'..--..','!':'-.-.--','\'' : '.----.','"':'.-..-.',':':'---...',';':'-.-.-.','/':'-..-.','-':'-....-','_':'..--.-','(':'-.--.',')':'-.--.-','@':'.--.-.','&':'.-...','=':'-...-','+':'.-.-.'
+};
+
+const morseIn = document.getElementById('morseIn');
+const morseOut = document.getElementById('morseOut');
+const morseBtn = document.getElementById('morseBtn');
+
+morseBtn.addEventListener('click', () => {
+  const txt = morseIn.value.toUpperCase();
+  if(!txt.trim()){ morseOut.textContent = '// waiting for input'; return; }
+  const encoded = txt.split('').map(c => MORSE[c] || '?').join(' ');
+  morseOut.textContent = encoded;
+
+  if(audioOn){
+    let delayAcc = 0;
+    encoded.split('').forEach(ch => {
+      if(ch === '.'){ tone(800, 0.08, 'sine', 0.12, delayAcc); delayAcc += 0.15; }
+      else if(ch === '-'){ tone(800, 0.24, 'sine', 0.12, delayAcc); delayAcc += 0.30; }
+      else { delayAcc += 0.15; }
+    });
+  }
+});
+morseIn.addEventListener('keydown', e => { if(e.key === 'Enter') morseBtn.click(); });
+
+/* ============================================================
+   TERMINAL
+   ============================================================ */
+const termBody = document.getElementById('termBody');
+const termInput = document.getElementById('termInput');
+const commandHistory = [];
+let histIdx = -1;
+
+function print(text, cls = 'out'){
+  const line = document.createElement('div');
+  line.className = 'term-line ' + cls;
+  line.textContent = text;
+  termBody.appendChild(line);
+  termBody.scrollTop = termBody.scrollHeight;
+}
+
+const commands = {
+  help(){
+    print('Available commands:', 'ok');
+    print('  whoami     — operator identity');
+    print('  skills     — list capabilities');
+    print('  tools      — show arsenal');
+    print('  contact    — get in touch');
+    print('  social     — find me online');
+    print('  nmap       — simulate a scan');
+    print('  hack       — ???', 'warn');
+    print('  ghost      — ???', 'ghost');
+    print('  scream     — ???', 'ghost');
+    print('  scare      — trigger a jumpscare', 'ghost');
+    print('  about      — short bio');
+    print('  clear      — clear terminal');
+    print('  sudo       — ???', 'warn');
+  },
+  whoami(){
+    print('💀 ABDO SAAD', 'ok');
+    print('Offensive Security Researcher · Red Teamer · CTF Player');
+    print('UID: 0 (root) · Shell: zsh · Location: Cairo/Earth');
+    print('Session: ' + new Date().toLocaleString(), 'dim');
+  },
+  skills(){
+    print('Red Teaming ................ 96%');
+    print('Web App Pentest ............ 98%');
+    print('Exploit Development ........ 88%');
+    print('Reverse Engineering ........ 85%');
+    print('Network Pentest ............ 94%');
+    print('Cloud Security ............. 90%');
+    print('Malware Analysis ........... 82%');
+    print('Scripting (Py/C/C++) ....... 95%');
+    print('Public Speaking ............ 200%', 'ghost');
+  },
+  tools(){
+    print('Arsenal:', 'ok');
+    print('  Nmap · Amass · Burp Suite · ffuf · Metasploit');
+    print('  pwntools · Ghidra · IDA Pro · Wireshark · Sliver · Pacu · Maltego');
+  },
+  contact(){
+    print('Email : abdo@hexward.io', 'ok');
+    print('Phone : +20 100 000 0000');
+    print('PGP   : 4096R / 0xABDOSAAD');
+    print('Web   : scroll to #contact');
+  },
+  social(){
+    print('GitHub   : github.com/abdo-saad', 'ok');
+    print('Twitter  : @abdo_saad');
+    print('HackTheBox : /abdo_saad');
+    print('HackerOne  : /abdo_saad');
+  },
+  about(){
+    print('بدأت عام 2019 كـbug hunter، ثم OSCP، ثم red teamer.');
+    print('متخصص في اختبار الاختراق، تطوير exploits، وتحليل البرمجيات الخبيثة.');
+    print('شاركت في نهائيات DEF CON CTF عدة مرات.');
+  },
+  nmap(){
+    print('Starting Nmap 7.94 ...', 'dim');
+    setTimeout(() => print('22/tcp   open  ssh      OpenSSH 9.2', 'ok'), 400);
+    setTimeout(() => print('80/tcp   open  http     nginx 1.25', 'ok'), 800);
+    setTimeout(() => print('443/tcp  open  https    nginx 1.25', 'ok'), 1100);
+    setTimeout(() => print('8080/tcp open  http-alt — flagged ⚠', 'warn'), 1400);
+    setTimeout(() => print('1337/tcp open  unknown  — YOU ARE BEING WATCHED', 'ghost'), 1700);
+    setTimeout(() => print('Scan complete: 4 hosts up, 8 ports found.', 'ok'), 2100);
+    setTimeout(() => glitchSound(), 400);
+  },
+  hack(){
+    print('$ sudo hack --target 0xFFFFFFFF', 'dim');
+    setTimeout(() => print('[+] scanning universe...', 'ok'), 400);
+    setTimeout(() => print('[+] privilege escalation...', 'ok'), 900);
+    setTimeout(() => print('[+] accessing mainframe...', 'ok'), 1400);
+    setTimeout(() => print('[!] access denied — this is a real website.', 'err'), 1900);
+    setTimeout(() => print('[i] try reading the writeups instead 💀', 'warn'), 2400);
+  },
+  ghost(){
+    print('...', 'dim');
+    setTimeout(() => print('you cannot see me', 'ghost'), 600);
+    setTimeout(() => print('but i can see you', 'ghost'), 1200);
+    setTimeout(() => print('behind you', 'ghost'), 1700);
+    if(Math.random() < 0.7) setTimeout(fireJumpscare, 2200);
+  },
+  scream(){
+    print('...', 'dim');
+    screamSound();
+    setTimeout(() => print('AIEEEEEEE!!!', 'ghost'), 200);
+    setTimeout(() => print('did that scare you? 😈', 'warn'), 800);
+  },
+  scare(){
+    fireJumpscare();
+    print('💀', 'ghost');
+  },
+  clear(){
+    termBody.innerHTML = '<div class="term-line dim">Terminal cleared. Type \'help\' for commands.</div>';
+  },
+  sudo(){
+    print('💀 nice try. you are already root.', 'warn');
+  },
+  ls(){
+    print('about.txt  skills.md  contact.txt  secrets.enc  writeups/  .ghost', 'dim');
+  },
+  'cat about.txt'(){ commands.about(); },
+  'cat secrets.enc'(){
+    print('Permission denied. Encryption key not found.', 'err');
+    print('Hint: ask the human directly → #contact', 'warn');
+  },
+  'cat .ghost'(){
+    print('you found me', 'ghost');
+    print('i have been here since the beginning', 'ghost');
+    print('look behind you', 'ghost');
+    fireJumpscare();
+  }
+};
+
+function runCommand(raw){
+  const cmd = raw.trim().toLowerCase();
+  if(!cmd) return;
+  commandHistory.push(raw);
+  histIdx = commandHistory.length;
+  print('abdo@root:~$ ' + raw, 'cmd');
+  if(commands[cmd]) commands[cmd]();
+  else print('command not found: ' + raw + "  (try 'help')", 'err');
+}
+
+termInput.addEventListener('keydown', e => {
+  if(e.key === 'Enter'){ runCommand(termInput.value); termInput.value = ''; }
+  else if(e.key === 'ArrowUp'){ if(histIdx > 0){ histIdx--; termInput.value = commandHistory[histIdx]; } e.preventDefault(); }
+  else if(e.key === 'ArrowDown'){
+    if(histIdx < commandHistory.length - 1){ histIdx++; termInput.value = commandHistory[histIdx]; }
+    else { histIdx = commandHistory.length; termInput.value = ''; }
+    e.preventDefault();
+  }
+});
+document.querySelector('.terminal').addEventListener('click', () => termInput.focus());
+
+/* ============================================================
+   PANIC
+   ============================================================ */
+const panicBtn = document.getElementById('panicBtn');
+panicBtn.addEventListener('click', () => {
+  fireJumpscare();
+  screamSound();
+  setTimeout(() => {
+    document.body.style.transition = 'filter .3s';
+    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    setTimeout(() => { document.body.style.filter = ''; }, 600);
+  }, 300);
+});
+
+/* ============================================================
+   FORM
+   ============================================================ */
+const form = document.getElementById('form');
+const toast = document.getElementById('toast');
+form.addEventListener('submit', e => {
+  e.preventDefault();
+  const name = form.name.value.trim();
+  const email = form.email.value.trim();
+  const msg = form.msg.value.trim();
+  if(!name || !email || !msg){
+    toast.textContent = '// ERROR: fill all required fields';
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+    return;
+  }
+  toast.textContent = '// secure message queued — reply within 48h';
+  toast.classList.add('show');
+  form.reset();
+  tone(880, 0.15, 'sine', 0.1);
+  setTimeout(() => toast.classList.remove('show'), 4000);
+});
+
+/* ============================================================
+   CONSOLE
+   ============================================================ */
+console.log('%c💀 ABDO SAAD 💀', 'color:#ff0055;font-size:32px;font-weight:900;text-shadow:0 0 20px #ff0055;');
+console.log('%cOffensive Security Researcher', 'color:#00ffc8;font-size:14px;font-weight:700;');
+console.log('%cYou opened the console. Bold move.', 'color:#69798b;font-style:italic;');
+console.log('%cI can see what you type here too. 💀', 'color:#ff0055;font-size:13px;');
+
+let konami = '';
+document.addEventListener('keydown', e => {
+  konami += e.key;
+  if(konami.length > 20) konami = konami.slice(-20);
+  if(konami.includes('ArrowUpArrowUpArrowDownArrowDown')){
+    document.body.style.filter = 'hue-rotate(90deg)';
+    fireJumpscare();
+    screamSound();
+    setTimeout(() => document.body.style.filter = '', 1500);
+  }
+});
+
+setInterval(() => {
+  if(document.visibilityState === 'visible' && Math.random() < 0.25){
+    document.body.style.transition = 'filter .05s';
+    document.body.style.filter = 'invert(1)';
+    setTimeout(() => document.body.style.filter = '', 120);
+  }
+}, 45000);
+</script>
+</body>
+                                                                                                                                        </html>
