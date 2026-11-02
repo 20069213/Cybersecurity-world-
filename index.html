@@ -12,6 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💀</text></svg>">
 
 <style>
+/* ================== BASE & VARIABLES ================== */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#05070a;
@@ -44,7 +45,7 @@ body{
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--red);color:#fff}
 
-/* ============== SHAKE ============== */
+/* ================== SHAKE & GLITCH ================== */
 @keyframes shake {
   0% { transform: translate(1px, 1px) rotate(0deg); }
   10% { transform: translate(-1px, -2px) rotate(-1deg); }
@@ -60,7 +61,7 @@ a{color:inherit;text-decoration:none}
 }
 .shake-active { animation: shake 0.5s; animation-iteration-count: 1; }
 
-/* ============== CURSOR ============== */
+/* ================== CURSOR ================== */
 .cursor{
   position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;
   background:var(--mint);pointer-events:none;z-index:99999;
@@ -84,51 +85,7 @@ a{color:inherit;text-decoration:none}
 }
 @media (pointer:coarse){.cursor,.cursor-ring,.blood-drop{display:none}}
 
-/* ============== CREEPY SPAWNS ============== */
-.creepy-spawn{
-  position:fixed;pointer-events:none;z-index:9500;
-  font-family:var(--horror);color:var(--red);
-  text-shadow:0 0 15px var(--red),0 0 30px var(--red);
-  animation:creepyFloat 2.5s ease-out forwards;
-  opacity:0;
-}
-@keyframes creepyFloat{
-  0%{opacity:0;transform:scale(0.5) translateY(20px)}
-  20%{opacity:.8;transform:scale(1) translateY(0)}
-  80%{opacity:.8;transform:scale(1.1) translateY(-10px)}
-  100%{opacity:0;transform:scale(0.8) translateY(-30px)}
-}
-
-/* ============== GLOBAL HACK FEED ============== */
-.global-hack-feed{
-  position:fixed;bottom:10px;left:10px;
-  font-family:var(--mono);font-size:10px;color:rgba(0,255,200,0.4);
-  pointer-events:none;z-index:500;max-width:300px;
-  direction:ltr;text-align:left;line-height:1.4;
-}
-.global-hack-feed div{
-  animation:feedIn 0.3s ease-out;
-}
-@keyframes feedIn{
-  from{opacity:0;transform:translateX(-10px)}
-  to{opacity:1;transform:translateX(0)}
-}
-
-/* ============== FAKE POPUP ============== */
-.fake-popup{
-  position:fixed;top:20%;left:50%;
-  transform:translate(-50%, -50%) scale(0);
-  background:rgba(255,0,0,0.95);color:#fff;
-  padding:20px 40px;font-family:var(--mono);font-weight:bold;
-  border:2px solid var(--red);box-shadow:0 0 50px var(--red);
-  z-index:9999999;transition:transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  pointer-events:none;text-align:center;
-  font-size:clamp(1rem, 3vw, 2rem);direction:ltr;
-  letter-spacing:2px;
-}
-.fake-popup.show{transform:translate(-50%, -50%) scale(1)}
-
-/* ============== BACKGROUNDS ============== */
+/* ================== BACKGROUNDS ================== */
 #matrix{position:fixed;inset:0;z-index:-3;opacity:.16;pointer-events:none}
 .grid-bg{
   position:fixed;inset:0;z-index:-2;pointer-events:none;
@@ -143,7 +100,6 @@ a{color:inherit;text-decoration:none}
 .glow.a{width:640px;height:640px;background:#00ffc8;top:-280px;right:-220px;opacity:.12}
 .glow.b{width:560px;height:560px;background:#ff0055;bottom:-260px;left:-200px;opacity:.09}
 .glow.c{width:480px;height:480px;background:#9d7bff;top:40%;left:35%;opacity:.06}
-
 .scanlines{
   position:fixed;inset:0;z-index:9000;pointer-events:none;
   background:repeating-linear-gradient(0deg,rgba(0,0,0,.15) 0,rgba(0,0,0,.15) 1px,transparent 1px,transparent 3px);
@@ -155,13 +111,12 @@ a{color:inherit;text-decoration:none}
   animation:scanmove 8s linear infinite;
 }
 @keyframes scanmove{0%{top:-120px}100%{top:100%}}
-
 .vignette{
   position:fixed;inset:0;z-index:9001;pointer-events:none;
   background:radial-gradient(ellipse at center,transparent 45%,rgba(0,0,0,.6) 100%);
 }
 
-/* ============== BOOT ============== */
+/* ================== BOOT ================== */
 .boot{
   position:fixed;inset:0;z-index:99999;background:var(--bg);
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -181,12 +136,9 @@ a{color:inherit;text-decoration:none}
 @keyframes bootline{to{opacity:1}}
 .boot .cursor-block{display:inline-block;width:8px;height:14px;background:var(--mint);vertical-align:middle;animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
-.boot .skip-hint{
-  position:absolute;bottom:30px;color:var(--muted);font-size:11px;
-  letter-spacing:2px;animation:blink 2s steps(1) infinite;
-}
+.boot .skip-hint{position:absolute;bottom:30px;color:var(--muted);font-size:11px;letter-spacing:2px;animation:blink 2s steps(1) infinite}
 
-/* ============== NAV ============== */
+/* ================== NAV ================== */
 .nav{
   position:fixed;top:0;right:0;left:0;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
@@ -195,10 +147,7 @@ a{color:inherit;text-decoration:none}
   border-bottom:1px solid transparent;transition:.35s;
 }
 .nav.scrolled{border-bottom-color:var(--line);background:rgba(5,7,10,.88)}
-.brand{
-  font-family:var(--display);font-weight:900;font-size:16px;letter-spacing:1px;
-  display:flex;align-items:center;gap:9px;direction:ltr;
-}
+.brand{font-family:var(--display);font-weight:900;font-size:16px;letter-spacing:1px;display:flex;align-items:center;gap:9px;direction:ltr}
 .brand .skull{font-size:18px;filter:drop-shadow(0 0 8px var(--red));animation:skullpulse 2.2s ease-in-out infinite}
 @keyframes skullpulse{50%{transform:scale(1.12);filter:drop-shadow(0 0 16px var(--red))}}
 .brand b{color:#fff}
@@ -225,11 +174,17 @@ a{color:inherit;text-decoration:none}
 .burger.open span:nth-child(2){opacity:0}
 .burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
-/* ============== HERO ============== */
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:120px 5vw 80px;text-align:center;position:relative;
-}
+/* ================== SECTIONS GENERAL ================== */
+section{padding:110px 5vw;position:relative}
+.wrap{max-width:1280px;margin:0 auto}
+.sec-head{margin-bottom:64px;max-width:720px}
+.sec-tag{font-family:var(--mono);font-size:11.5px;letter-spacing:3px;color:var(--red);direction:ltr;display:inline-block;margin-bottom:16px}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.7rem);font-weight:800;line-height:1.2;margin-bottom:16px}
+.sec-head h2 em{font-style:normal;color:var(--mint);text-shadow:0 0 26px rgba(0,255,200,.3)}
+.sec-head p{color:var(--muted);font-size:15.5px}
+
+/* ================== HERO ================== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:120px 5vw 80px;text-align:center;position:relative}
 .kicker{
   display:inline-flex;align-items:center;gap:8px;
   font-family:var(--mono);font-size:11.5px;letter-spacing:2px;
@@ -239,24 +194,14 @@ a{color:inherit;text-decoration:none}
 }
 .kicker .dot{width:6px;height:6px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);animation:pulse 1.6s infinite}
 @keyframes pulse{50%{opacity:.3}}
-
-.skull-eq{
-  font-size:clamp(3rem,7vw,5rem);line-height:1;
-  margin-bottom:14px;position:relative;
-  filter:drop-shadow(0 0 30px var(--red));
-  animation:skullpulse 2.2s ease-in-out infinite;
-}
+.skull-eq{font-size:clamp(3rem,7vw,5rem);line-height:1;margin-bottom:14px;position:relative;filter:drop-shadow(0 0 30px var(--red));animation:skullpulse 2.2s ease-in-out infinite}
 .hero-name{
   font-family:var(--display);font-weight:900;
   font-size:clamp(2.4rem,10vw,8.5rem);
   line-height:.95;letter-spacing:.02em;
   position:relative;display:inline-block;color:#fff;
-  text-shadow:
-    0 0 22px rgba(0,255,200,.35),
-    0 0 60px rgba(0,255,200,.18),
-    0 0 120px rgba(0,255,200,.08);
-  animation:nameShiver .14s infinite;
-  will-change:transform;
+  text-shadow:0 0 22px rgba(0,255,200,.35),0 0 60px rgba(0,255,200,.18),0 0 120px rgba(0,255,200,.08);
+  animation:nameShiver .14s infinite;will-change:transform;
 }
 @keyframes nameShiver{
   0%{transform:translate(0,0) rotate(0deg)}
@@ -265,10 +210,7 @@ a{color:inherit;text-decoration:none}
   75%{transform:translate(-1px,-1px) rotate(-.1deg)}
   100%{transform:translate(1px,1px) rotate(.2deg)}
 }
-.hero-name::before, .hero-name::after{
-  content:attr(data-text);position:absolute;inset:0;
-  background:var(--bg);overflow:hidden;pointer-events:none;
-}
+.hero-name::before, .hero-name::after{content:attr(data-text);position:absolute;inset:0;background:var(--bg);overflow:hidden;pointer-events:none}
 .hero-name::before{color:var(--red);animation:glitchA 3.4s infinite steps(1);mix-blend-mode:screen;opacity:.85}
 .hero-name::after{color:var(--cyan);animation:glitchB 2.8s infinite steps(1);mix-blend-mode:screen;opacity:.85}
 @keyframes glitchA{
@@ -286,47 +228,25 @@ a{color:inherit;text-decoration:none}
   95%{clip-path:inset(35% 0 40% 0);transform:translate(3px,0)}
   97%{clip-path:inset(80% 0 5% 0);transform:translate(-5px,0)}
 }
-.skull-flank{
-  display:inline-block;font-family:var(--sans);
-  font-size:.55em;vertical-align:middle;margin:0 .12em;
-  filter:drop-shadow(0 0 14px var(--red));
-  animation:skullpulse 2.2s ease-in-out infinite;
-}
-.hero-sub{
-  font-family:var(--mono);font-size:clamp(12px,1.6vw,15px);
-  color:var(--red);direction:ltr;letter-spacing:2px;
-  margin:26px 0 18px;text-transform:uppercase;
-}
+.skull-flank{display:inline-block;font-family:var(--sans);font-size:.55em;vertical-align:middle;margin:0 .12em;filter:drop-shadow(0 0 14px var(--red));animation:skullpulse 2.2s ease-in-out infinite}
+.hero-sub{font-family:var(--mono);font-size:clamp(12px,1.6vw,15px);color:var(--red);direction:ltr;letter-spacing:2px;margin:26px 0 18px;text-transform:uppercase}
 .hero-sub .sep{color:var(--line-2);margin:0 10px}
-.hero-typer{
-  font-family:var(--mono);font-size:clamp(13px,1.7vw,17px);
-  color:var(--muted);direction:ltr;min-height:28px;margin-bottom:40px;
-}
+.hero-typer{font-family:var(--mono);font-size:clamp(13px,1.7vw,17px);color:var(--muted);direction:ltr;min-height:28px;margin-bottom:40px}
 .hero-typer .prompt{color:var(--mint)}
 .typer-cursor{display:inline-block;width:9px;height:16px;background:var(--mint);vertical-align:-3px;animation:blink 1s steps(1) infinite}
 .hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
-.btn{
-  font-family:var(--mono);font-size:13.5px;padding:14px 28px;border-radius:6px;
-  transition:.25s;display:inline-flex;align-items:center;gap:10px;
-  direction:ltr;cursor:none;border:1px solid transparent;
-}
+.btn{font-family:var(--mono);font-size:13.5px;padding:14px 28px;border-radius:6px;transition:.25s;display:inline-flex;align-items:center;gap:10px;direction:ltr;cursor:none;border:1px solid transparent}
 .btn-primary{background:var(--mint);color:#031410;font-weight:700;border-color:var(--mint)}
 .btn-primary:hover{box-shadow:0 0 40px rgba(0,255,200,.5);transform:translateY(-2px)}
 .btn-ghost{border-color:var(--line-2);color:var(--text);background:rgba(255,255,255,.01)}
 .btn-ghost:hover{border-color:var(--mint);color:var(--mint)}
 .btn-danger{border-color:var(--red);color:var(--red);background:rgba(255,0,85,.04)}
 .btn-danger:hover{background:var(--red);color:#0a0004;box-shadow:0 0 40px rgba(255,0,85,.4)}
-
-.scroll-hint{
-  position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
-  font-family:var(--mono);font-size:10.5px;color:var(--muted);
-  letter-spacing:3px;direction:ltr;display:flex;flex-direction:column;
-  align-items:center;gap:8px;
-}
+.scroll-hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:3px;direction:ltr;display:flex;flex-direction:column;align-items:center;gap:8px}
 .scroll-hint .line{width:1px;height:38px;background:linear-gradient(180deg,var(--mint),transparent);animation:scrolldown 1.8s infinite}
 @keyframes scrolldown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* ============== STATS ============== */
+/* ================== STATS ================== */
 .stats{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,var(--bg-2),var(--bg));padding:54px 5vw}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1280px;margin:0 auto}
 .stat{text-align:center;position:relative}
@@ -335,16 +255,7 @@ a{color:inherit;text-decoration:none}
 .stat .num .suf{color:var(--red);font-size:.55em}
 .stat .lbl{color:var(--muted);font-size:13.5px;margin-top:12px;font-family:var(--mono);letter-spacing:.5px}
 
-/* ============== SECTION ============== */
-section{padding:110px 5vw;position:relative}
-.wrap{max-width:1280px;margin:0 auto}
-.sec-head{margin-bottom:64px;max-width:720px}
-.sec-tag{font-family:var(--mono);font-size:11.5px;letter-spacing:3px;color:var(--red);direction:ltr;display:inline-block;margin-bottom:16px}
-.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.7rem);font-weight:800;line-height:1.2;margin-bottom:16px}
-.sec-head h2 em{font-style:normal;color:var(--mint);text-shadow:0 0 26px rgba(0,255,200,.3)}
-.sec-head p{color:var(--muted);font-size:15.5px}
-
-/* ============== ARSENAL ============== */
+/* ================== ARSENAL ================== */
 .arsenal{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .tool{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:12px;padding:24px 20px;position:relative;overflow:hidden;transition:.3s}
 .tool::before{content:"";position:absolute;inset:0;opacity:0;transition:.3s;background:radial-gradient(circle at 100% 0%,rgba(255,0,85,.10),transparent 65%)}
@@ -356,7 +267,18 @@ section{padding:110px 5vw;position:relative}
 .tool .t-desc{font-size:13px;color:var(--muted);line-height:1.6}
 .tool .t-tag{display:inline-block;font-family:var(--mono);font-size:10px;color:var(--mint);border:1px solid var(--mint-dim);padding:2px 8px;border-radius:4px;margin-top:14px;direction:ltr}
 
-/* ============== SKILLS ============== */
+/* ================== SCANNER ================== */
+.scanner{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:32px;position:relative;overflow:hidden}
+.scanner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 20px,rgba(255,0,85,.03) 20px,rgba(255,0,85,.03) 21px);pointer-events:none}
+.scanner-scan{position:relative;height:4px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin-bottom:24px;box-shadow:0 0 20px var(--red);animation:scannerMove 2.5s linear infinite;opacity:.7}
+@keyframes scannerMove{0%{transform:translateY(0)}50%{transform:translateY(80px)}100%{transform:translateY(0)}}
+.scanner output{display:block;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--mint);min-height:220px;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word}
+.scanner-output .ok{color:var(--mint)}
+.scanner-output .bad{color:var(--red)}
+.scanner-output .warn{color:var(--amber)}
+.scan-trigger{margin-top:22px}
+
+/* ================== SKILLS ================== */
 .skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
 .skill{margin-bottom:26px}
 .skill-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;font-family:var(--mono);font-size:13px;direction:ltr}
@@ -366,7 +288,7 @@ section{padding:110px 5vw;position:relative}
 .skill-fill{height:100%;width:0;background:linear-gradient(90deg,var(--mint-dim),var(--mint));border-radius:10px;transition:width 1.6s cubic-bezier(.2,.9,.3,1);box-shadow:0 0 12px rgba(0,255,200,.4);position:relative}
 .skill-fill::after{content:"";position:absolute;right:0;top:0;bottom:0;width:20px;background:linear-gradient(90deg,transparent,rgba(0,255,200,.6))}
 
-/* ============== TERMINAL ============== */
+/* ================== TERMINAL ================== */
 .terminal-wrap{max-width:940px;margin:0 auto}
 .terminal{background:linear-gradient(180deg,#040709,#020405);border:1px solid rgba(255,0,85,.25);border-radius:12px;overflow:hidden;box-shadow:0 40px 100px -40px rgba(255,0,85,.3),0 0 0 1px rgba(255,0,85,.08);font-family:var(--mono);font-size:13px;direction:ltr;text-align:left}
 .term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--panel-2);border-bottom:1px solid var(--line)}
@@ -393,18 +315,76 @@ section{padding:110px 5vw;position:relative}
 .term-hint{text-align:center;font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:18px;direction:ltr}
 .term-hint code{color:var(--red);background:rgba(255,0,85,.06);padding:1px 6px;border-radius:4px;border:1px solid rgba(255,0,85,.2)}
 
-/* ============== SCANNER ============== */
-.scanner{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:32px;position:relative;overflow:hidden}
-.scanner::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0,transparent 20px,rgba(255,0,85,.03) 20px,rgba(255,0,85,.03) 21px);pointer-events:none}
-.scanner-scan{position:relative;height:4px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin-bottom:24px;box-shadow:0 0 20px var(--red);animation:scannerMove 2.5s linear infinite;opacity:.7}
-@keyframes scannerMove{0%{transform:translateY(0)}50%{transform:translateY(80px)}100%{transform:translateY(0)}}
-.scanner output{display:block;font-family:var(--mono);font-size:13px;line-height:1.9;color:var(--mint);min-height:220px;direction:ltr;text-align:left;white-space:pre-wrap;word-break:break-word}
-.scanner-output .ok{color:var(--mint)}
-.scanner-output .bad{color:var(--red)}
-.scanner-output .warn{color:var(--amber)}
-.scan-trigger{margin-top:22px}
+/* ================== DARK WEB ================== */
+.darkweb{background:#020304;position:relative;overflow:hidden;border-top:1px solid #1a0a0a;border-bottom:1px solid #1a0a0a}
+.darkweb::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,0,85,0.03) 0%, transparent 70%);pointer-events:none}
 
-/* ============== WRITEUPS ============== */
+.tor-connect{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:300px;font-family:var(--mono);gap:18px;
+  background:rgba(0,0,0,0.6);border:1px solid #2a0a12;border-radius:12px;padding:40px;
+  text-align:center;
+}
+.tor-connect .onion{
+  font-size:64px;filter:drop-shadow(0 0 20px var(--red));animation:skullpulse 2s infinite;
+}
+.tor-connect h3{color:var(--red);font-size:20px;letter-spacing:2px;direction:ltr}
+.tor-connect p{color:var(--muted);font-size:14px;max-width:400px}
+.tor-log{
+  font-family:var(--mono);font-size:12px;color:var(--mint);
+  text-align:left;direction:ltr;background:#050505;border:1px solid #1a1a1a;
+  padding:12px;border-radius:6px;width:100%;max-width:600px;min-height:120px;
+  line-height:1.8;display:none;margin-top:16px;
+}
+.tor-log.show{display:block}
+.tor-log .ok{color:var(--mint)}
+.tor-log .err{color:var(--red)}
+.tor-log .dim{color:#444}
+
+.dark-market{display:none;margin-top:40px}
+.dark-market.show{display:block;animation:fadeIn .5s ease}
+
+.market-header{
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid #2a0a12;padding-bottom:20px;margin-bottom:24px;
+  flex-wrap:wrap;gap:16px;
+}
+.market-title{font-family:var(--horror);font-size:32px;color:var(--red);text-shadow:0 0 20px var(--red);letter-spacing:2px}
+.market-stats{font-family:var(--mono);font-size:12px;color:var(--muted);direction:ltr;display:flex;gap:20px;flex-wrap:wrap}
+.market-stats span{color:var(--mint)}
+
+.market-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.listing{
+  background:linear-gradient(180deg,#0a0505,#050202);border:1px solid #2a0a12;
+  border-radius:10px;padding:20px;position:relative;transition:.3s;
+  display:flex;flex-direction:column;
+}
+.listing:hover{border-color:var(--red);box-shadow:0 0 30px rgba(255,0,85,0.15);transform:translateY(-3px)}
+.listing .l-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.listing .l-cat{font-family:var(--mono);font-size:10px;color:var(--red);border:1px solid rgba(255,0,85,0.3);padding:2px 8px;border-radius:4px;letter-spacing:1px}
+.listing .l-rating{font-family:var(--mono);font-size:11px;color:var(--amber)}
+.listing h4{font-size:16px;color:#fff;margin-bottom:8px;line-height:1.3;font-weight:700}
+.listing p{font-size:12.5px;color:var(--muted);margin-bottom:16px;flex-grow:1}
+.listing .l-bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #1a0a12;padding-top:12px;margin-top:auto}
+.listing .l-price{font-family:var(--mono);font-size:15px;color:var(--mint);font-weight:700}
+.listing .l-price small{font-size:10px;color:var(--muted);display:block;font-weight:400}
+.listing .l-btn{
+  background:var(--red);color:#fff;border:0;padding:6px 14px;border-radius:4px;
+  font-family:var(--mono);font-size:11px;font-weight:700;cursor:none;
+  transition:.2s;
+}
+.listing .l-btn:hover{background:#fff;color:var(--red)}
+
+.market-feed{
+  margin-top:30px;background:#000;border:1px solid #1a0a12;border-radius:8px;
+  padding:14px;font-family:var(--mono);font-size:11px;color:var(--muted);
+  direction:ltr;text-align:left;max-height:150px;overflow:hidden;
+}
+.market-feed .feed-title{color:var(--red);margin-bottom:8px;font-size:11px;letter-spacing:1px}
+.market-feed div div{animation:feedIn .3s ease}
+@keyframes feedIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+
+/* ================== WRITEUPS ================== */
 .ctf-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .writeup{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:12px;padding:26px;transition:.3s;position:relative;overflow:hidden;cursor:none}
 .writeup:hover{border-color:rgba(255,0,85,.3);transform:translateY(-3px);box-shadow:0 20px 50px -30px rgba(255,0,85,.4)}
@@ -419,7 +399,7 @@ section{padding:110px 5vw;position:relative}
 .writeup .w-meta{display:flex;gap:14px;font-family:var(--mono);font-size:11px;color:var(--muted);direction:ltr}
 .writeup .w-meta span{color:var(--mint)}
 
-/* ============== CONTACT ============== */
+/* ================== CONTACT ================== */
 .contact-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:70px;align-items:start}
 .contact-info h2{font-size:clamp(1.7rem,3vw,2.5rem);font-weight:800;margin-bottom:18px;line-height:1.2}
 .contact-info h2 em{font-style:normal;color:var(--red)}
@@ -440,18 +420,18 @@ section{padding:110px 5vw;position:relative}
 .toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,140px);background:var(--red);color:#fff;padding:14px 28px;border-radius:8px;font-family:var(--mono);font-size:13px;font-weight:700;z-index:1000;transition:transform .4s cubic-bezier(.2,.9,.3,1.3);direction:ltr;box-shadow:0 20px 60px -20px rgba(255,0,85,.5)}
 .toast.show{transform:translate(-50%,0)}
 
-/* ============== FOOTER ============== */
+/* ================== FOOTER ================== */
 footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--bg-2)}
 .foot-wrap{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
 .foot-links{display:flex;gap:26px;font-family:var(--mono);font-size:12.5px;color:var(--muted);direction:ltr}
 .foot-links a:hover{color:var(--red)}
 .copy{color:#3f5061;font-size:12px;font-family:var(--mono);direction:ltr}
 
-/* ============== REVEAL ============== */
+/* ================== REVEAL ================== */
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 
-/* ============== JUMPSCARE ============== */
+/* ================== JUMPSCARE & OVERLAYS ================== */
 .jumpscare{
   position:fixed;inset:0;z-index:999999;background:#000;
   display:flex;flex-direction:column;justify-content:center;align-items:center;
@@ -459,23 +439,14 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   pointer-events:none;
 }
 .jumpscare.fire{opacity:1;visibility:visible;pointer-events:auto}
-.jumpscare .skull-huge{
-  font-size:min(60vh,60vw);line-height:1;
-  filter:drop-shadow(0 0 80px var(--red)) drop-shadow(0 0 200px var(--red));
-  animation:jumpskull .8s ease-out;
-}
+.jumpscare .skull-huge{font-size:min(60vh,60vw);line-height:1;filter:drop-shadow(0 0 80px var(--red)) drop-shadow(0 0 200px var(--red));animation:jumpskull .8s ease-out}
 @keyframes jumpskull{
   0%{transform:scale(.1) rotate(-15deg);opacity:0}
   30%{transform:scale(1.4) rotate(8deg);opacity:1}
   60%{transform:scale(1) rotate(-4deg)}
   100%{transform:scale(1.08) rotate(0)}
 }
-.jumpscare .msg{
-  font-family:var(--horror);color:var(--red);
-  font-size:clamp(2rem,7vw,5rem);letter-spacing:4px;
-  margin-top:20px;text-shadow:0 0 40px var(--red);
-  animation:msgShiver .08s infinite;
-}
+.jumpscare .msg{font-family:var(--horror);color:var(--red);font-size:clamp(2rem,7vw,5rem);letter-spacing:4px;margin-top:20px;text-shadow:0 0 40px var(--red);animation:msgShiver .08s infinite}
 @keyframes msgShiver{
   0%,100%{transform:translate(0,0)}
   25%{transform:translate(-3px,2px)}
@@ -483,12 +454,10 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   75%{transform:translate(-2px,-2px)}
 }
 
-/* ============== WHISPERS ============== */
+/* ================== WHISPERS & ELEMENTS ================== */
 .whisper{
-  position:fixed;font-family:var(--horror);
-  color:var(--red);font-size:22px;letter-spacing:2px;
-  pointer-events:none;z-index:9997;opacity:0;
-  text-shadow:0 0 20px var(--red),0 0 40px var(--red);
+  position:fixed;font-family:var(--horror);color:var(--red);font-size:22px;letter-spacing:2px;
+  pointer-events:none;z-index:9997;opacity:0;text-shadow:0 0 20px var(--red),0 0 40px var(--red);
   animation:whisperFloat 3.5s ease-out forwards;
 }
 @keyframes whisperFloat{
@@ -497,34 +466,29 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   80%{opacity:.9;transform:translateY(-60px) scale(1.02)}
   100%{opacity:0;transform:translateY(-90px) scale(.9)}
 }
-
-/* ============== MORSE ============== */
-.morse-block{
-  background:linear-gradient(180deg,var(--panel),var(--bg-2));
-  border:1px solid var(--line);border-radius:14px;
-  padding:32px;max-width:760px;margin:40px auto 0;
+.creepy-spawn{
+  position:fixed;pointer-events:none;z-index:9500;font-family:var(--horror);color:var(--red);
+  text-shadow:0 0 15px var(--red),0 0 30px var(--red);
+  animation:creepyFloat 2.5s ease-out forwards;opacity:0;
 }
+@keyframes creepyFloat{
+  0%{opacity:0;transform:scale(0.5) translateY(20px)}
+  20%{opacity:.8;transform:scale(1) translateY(0)}
+  80%{opacity:.8;transform:scale(1.1) translateY(-10px)}
+  100%{opacity:0;transform:scale(0.8) translateY(-30px)}
+}
+
+/* ================== MORSE ================== */
+.morse-block{background:linear-gradient(180deg,var(--panel),var(--bg-2));border:1px solid var(--line);border-radius:14px;padding:32px;max-width:760px;margin:40px auto 0}
 .morse-block h3{font-family:var(--mono);font-size:14px;color:var(--red);letter-spacing:2px;margin-bottom:18px;direction:ltr;text-align:center}
 .morse-block .morse-input{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
-.morse-block input{
-  flex:1;min-width:200px;background:var(--bg);border:1px solid var(--line);border-radius:6px;
-  padding:12px 16px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none;cursor:none;
-  transition:.2s;
-}
+.morse-block input{flex:1;min-width:200px;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:12px 16px;color:var(--text);font-family:var(--mono);font-size:14px;outline:none;cursor:none;transition:.2s}
 .morse-block input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,0,85,.08)}
-.morse-block button{
-  background:var(--red);color:#fff;border:0;padding:12px 22px;border-radius:6px;
-  font-family:var(--mono);font-size:13px;font-weight:700;cursor:none;transition:.2s;
-}
+.morse-block button{background:var(--red);color:#fff;border:0;padding:12px 22px;border-radius:6px;font-family:var(--mono);font-size:13px;font-weight:700;cursor:none;transition:.2s}
 .morse-block button:hover{box-shadow:0 0 30px rgba(255,0,85,.5)}
-.morse-out{
-  font-family:var(--mono);font-size:15px;color:var(--mint);
-  min-height:30px;padding:14px;background:var(--bg);border:1px solid var(--line);
-  border-radius:6px;direction:ltr;text-align:left;word-break:break-all;
-  line-height:1.8;
-}
+.morse-out{font-family:var(--mono);font-size:15px;color:var(--mint);min-height:30px;padding:14px;background:var(--bg);border:1px solid var(--line);border-radius:6px;direction:ltr;text-align:left;word-break:break-all;line-height:1.8}
 
-/* ============== RESPONSIVE ============== */
+/* ================== RESPONSIVE ================== */
 @media (max-width:1100px){.arsenal{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:980px){
   .nav-links{position:fixed;top:0;left:0;height:100vh;width:min(80vw,320px);background:var(--bg-2);flex-direction:column;justify-content:center;padding:60px 40px;gap:30px;font-size:18px;transform:translateX(-100%);transition:transform .4s ease;border-right:1px solid var(--line)}
@@ -543,6 +507,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
   .arsenal{grid-template-columns:1fr}
   .hero{padding-top:110px}
   .skull-flank{font-size:.5em}
+  .market-title{font-size:24px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
@@ -597,6 +562,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
     <a href="#scanner">الفحص</a>
     <a href="#skills">المهارات</a>
     <a href="#terminal">التيرمنال</a>
+    <a href="#darkweb">الدارك ويب</a>
     <a href="#writeups">الكتابات</a>
     <a href="#contact">تواصل</a>
   </nav>
@@ -739,7 +705,46 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
             </div>
           </div>
         </div>
-        <div class="term-hint">Try: <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>nmap</code> · <code>hack</code> · <code>ghost</code> · <code>scream</code> · <code>scare</code></div>
+        <div class="term-hint">Try: <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>nmap</code> · <code>hack</code> · <code>ghost</code> · <code>scream</code> · <code>scare</code> · <code>virus</code></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DARK WEB -->
+  <section id="darkweb" class="darkweb">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// DARK WEB ACCESS</span>
+        <h2>الشبكة <em>المظلمة</em></h2>
+        <p>كل ما تراه هنا خيال. لكنه مبني على بنية حقيقية. الدخول ليس مجانياً.</p>
+      </div>
+
+      <div class="tor-connect reveal" id="torConnect">
+        <div class="onion">🧅</div>
+        <h3>// TOR CIRCUIT NOT ESTABLISHED</h3>
+        <p>أنت على الشبكة المفتوحة. للوصول إلى السوق، يجب إنشاء دائرة Tor من 3 عقد.</p>
+        <button class="btn btn-danger" id="torBtn">🔗 اتصل بشبكة Tor</button>
+        <div class="tor-log" id="torLog"></div>
+      </div>
+
+      <div class="dark-market" id="darkMarket">
+        <div class="market-header">
+          <div class="market-title">// SILK ROAD RELOADED</div>
+          <div class="market-stats">
+            <div>ONION: <span>abdo5aad7x2.onion</span></div>
+            <div>UPTIME: <span>99.98%</span></div>
+            <div>USERS: <span id="marketUsers">14,203</span></div>
+          </div>
+        </div>
+
+        <div class="market-grid" id="marketGrid">
+          <!-- Listings will be injected here -->
+        </div>
+
+        <div class="market-feed" id="marketFeed">
+          <div class="feed-title">// LIVE TRANSACTIONS</div>
+          <div id="feedContent"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -821,8 +826,8 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
     <div class="foot-links">
       <a href="#arsenal">Arsenal</a>
       <a href="#scanner">Scanner</a>
+      <a href="#darkweb">Dark Web</a>
       <a href="#terminal">Shell</a>
-      <a href="#writeups">Writeups</a>
       <a href="#contact">Contact</a>
     </div>
     <div class="copy">© 2024 ABDO SAAD · i saw you</div>
@@ -864,7 +869,7 @@ addEventListener('mousemove', e => {
   ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
   requestAnimationFrame(follow);
 })();
-document.querySelectorAll('a,button,input,textarea,select,.tool,.writeup').forEach(el => {
+document.querySelectorAll('a,button,input,textarea,select,.tool,.writeup,.listing,.tor-connect').forEach(el => {
   el.addEventListener('mouseenter', () => cur.classList.add('hover'));
   el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
 });
@@ -934,10 +939,47 @@ navlinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
    ============================================================ */
 let audioOn = false;
 let audioCtx = null;
+let droneOsc = null;
+let droneGain = null;
 
 function initAudio(){
   if(audioCtx) return;
   audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function startDrone(){
+  if(!audioCtx || droneOsc) return;
+  droneOsc = audioCtx.createOscillator();
+  droneGain = audioCtx.createGain();
+  const filter = audioCtx.createBiquadFilter();
+  droneOsc.type = 'sawtooth';
+  droneOsc.frequency.value = 43;
+  filter.type = 'lowpass';
+  filter.frequency.value = 110;
+  filter.Q.value = 6;
+  droneGain.gain.value = 0;
+  droneOsc.connect(filter);
+  filter.connect(droneGain);
+  droneGain.connect(audioCtx.destination);
+  droneOsc.start();
+  droneGain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + 2);
+  const lfo = audioCtx.createOscillator();
+  const lfoGain = audioCtx.createGain();
+  lfo.frequency.value = 0.15;
+  lfoGain.gain.value = 0.02;
+  lfo.connect(lfoGain);
+  lfoGain.connect(droneGain.gain);
+  lfo.start();
+}
+
+function stopDrone(){
+  if(droneGain && audioCtx){
+    droneGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.8);
+    setTimeout(() => {
+      if(droneOsc){ try{ droneOsc.stop(); }catch(e){} droneOsc = null; }
+      droneGain = null;
+    }, 900);
+  }
 }
 
 function tone(freq, dur, type='sine', vol=0.15, delay=0){
@@ -1018,7 +1060,8 @@ audioBtn.addEventListener('click', () => {
   audioOn = !audioOn;
   audioBtn.classList.toggle('on', audioOn);
   audioBtn.textContent = audioOn ? '🔊 SOUND' : '🔇 SOUND';
-  if(audioOn) tone(880, 0.1, 'sine', 0.1);
+  if(audioOn){ tone(880, 0.1, 'sine', 0.1); startDrone(); }
+  else { stopDrone(); }
 });
 
 setInterval(() => {
@@ -1035,7 +1078,7 @@ let lastScare = 0;
 
 function fireJumpscare(){
   const now = Date.now();
-  if(now - lastScare < 15000) return;
+  if(now - lastScare < 12000) return;
   lastScare = now;
   jumpscareMsg.textContent = scareWords[Math.floor(Math.random() * scareWords.length)];
   jumpscare.classList.add('fire');
@@ -1045,7 +1088,7 @@ function fireJumpscare(){
 }
 
 setInterval(() => {
-  if(Math.random() < 0.05) fireJumpscare();
+  if(Math.random() < 0.06) fireJumpscare();
 }, 8000);
 
 /* ============================================================
@@ -1067,7 +1110,7 @@ setInterval(() => {
 }, 7000);
 
 /* ============================================================
-   CREEPY SPAWNS (Eyes, Skulls, Blood, Text)
+   CREEPY SPAWNS
    ============================================================ */
 const creepyElements = ['👁️', '💀', '🩸', 'I SEE YOU', 'BEHIND YOU', 'RUN', 'ERROR 404: SOUL NOT FOUND', 'LOOK UP', 'HELLO'];
 function spawnCreepyElement(){
@@ -1099,7 +1142,9 @@ const hackMessages = [
   '> establishing reverse shell... CONNECTED',
   '> wiping logs... FAILED (they know)',
   '> tracking IP... 127.0.0.1 (You)',
-  '> injecting ransomware... 99%'
+  '> injecting ransomware... 99%',
+  '> screen recording... 00:14:33',
+  '> keylogger sent: ' + Math.floor(Math.random()*9000+1000) + ' keystrokes'
 ];
 setInterval(() => {
   if(document.visibilityState === 'visible') {
@@ -1132,8 +1177,8 @@ function triggerShake(){
   setTimeout(() => document.body.classList.remove('shake-active'), 500);
 }
 setInterval(() => {
-  if (document.visibilityState === 'visible' && Math.random() < 0.1) triggerShake();
-}, 12000);
+  if (document.visibilityState === 'visible' && Math.random() < 0.12) triggerShake();
+}, 10000);
 
 /* ============================================================
    HERO TYPER
@@ -1356,6 +1401,8 @@ const commands = {
     print('  ghost      — ???', 'ghost');
     print('  scream     — ???', 'ghost');
     print('  scare      — trigger a jumpscare', 'ghost');
+    print('  virus      — ???', 'ghost');
+    print('  darkweb    — connect to dark web', 'warn');
     print('  about      — short bio');
     print('  clear      — clear terminal');
     print('  sudo       — ???', 'warn');
@@ -1434,6 +1481,14 @@ const commands = {
     fireJumpscare();
     print('💀', 'ghost');
   },
+  virus(){
+    showVirusAlert();
+    print('💀 you asked for it', 'ghost');
+  },
+  darkweb(){
+    document.getElementById('darkweb').scrollIntoView({behavior:'smooth'});
+    setTimeout(() => document.getElementById('torBtn').click(), 800);
+  },
   clear(){
     termBody.innerHTML = '<div class="term-line dim">Terminal cleared. Type \'help\' for commands.</div>';
   },
@@ -1441,7 +1496,7 @@ const commands = {
     print('💀 nice try. you are already root.', 'warn');
   },
   ls(){
-    print('about.txt  skills.md  contact.txt  secrets.enc  writeups/  .ghost', 'dim');
+    print('about.txt  skills.md  contact.txt  secrets.enc  writeups/  .ghost  ransom.exe', 'dim');
   },
   'cat about.txt'(){ commands.about(); },
   'cat secrets.enc'(){
@@ -1453,6 +1508,11 @@ const commands = {
     print('i have been here since the beginning', 'ghost');
     print('look behind you', 'ghost');
     fireJumpscare();
+  },
+  'run ransom.exe'(){
+    print('executing payload...', 'warn');
+    setTimeout(() => showVirusAlert(), 400);
+    setTimeout(() => print('you should not have done that.', 'ghost'), 1600);
   }
 };
 
@@ -1516,6 +1576,122 @@ form.addEventListener('submit', e => {
 });
 
 /* ============================================================
+   DARK WEB LOGIC
+   ============================================================ */
+const torBtn = document.getElementById('torBtn');
+const torLog = document.getElementById('torLog');
+const torConnect = document.getElementById('torConnect');
+const darkMarket = document.getElementById('darkMarket');
+const marketGrid = document.getElementById('marketGrid');
+const feedContent = document.getElementById('feedContent');
+const marketUsers = document.getElementById('marketUsers');
+
+const torSteps = [
+  '> connecting to guard node... 185.220.101.44',
+  '> handshake: TLS 1.3 / AES-256-GCM',
+  '> middle node... 51.15.43.232',
+  '> circuit established',
+  '> exit node... 199.87.154.255',
+  '> new identity: 127.0.0.1',
+  '> accessing onion service abdo5aad7x2.onion',
+  '> resolving 42 hops...',
+  '> fetching marketplace...',
+  '> injecting encryption layer...',
+  '> DONE. welcome to the dark side.',
+];
+
+const listings = [
+  { cat: 'DATA LEAK', name: 'Full DB Dump — 1.2M Users', desc: 'PostgreSQL dump, bcrypt hashes, emails, phone numbers. Fresh from 2024 breach.', price: '0.75 BTC', seller: 'dark_angel' },
+  { cat: 'EXPLOIT', name: 'Chrome 0-Day RCE (2024)', desc: 'Full chain RCE, bypasses ASLR + sandbox. Works on latest Chrome/Edge.', price: '12 BTC', seller: 's1l3nt' },
+  { cat: 'SERVICE', name: 'DDoS-as-a-Service (24h)', desc: '10M pps, layer 7, targets any domain. No logs, no questions.', price: '0.15 XMR', seller: 'botnet_king' },
+  { cat: 'DATA LEAK', name: 'Corporate Emails — Fortune 500', desc: 'Internal communications, 8GB, including board-level discussions.', price: '3.5 BTC', seller: 'shadow' },
+  { cat: 'EXPLOIT', name: 'Windows LPE — 0-Day', desc: 'Local privilege escalation on Win 11 24H2. SYSTEM shell, no AV detection.', price: '8 BTC', seller: 'zer0' },
+  { cat: 'SERVICE', name: 'Ransomware Kit (Custom)', desc: 'Fully undetectable, encryption + C2 panel. Source code included.', price: '25 BTC', seller: 'crypt0_lord' },
+  { cat: 'IDENTITY', name: 'Full ID Kit — US/EU', desc: 'Passports, driver licenses, SSN. 5 profiles. Physical delivery included.', price: '1.2 BTC', seller: 'ghost_id' },
+  { cat: 'ACCESS', name: 'Corporate VPN Access', desc: 'Fortinet VPN, valid credentials, MFA bypassed. 3 different companies.', price: '4.8 BTC', seller: 'vpn_king' },
+];
+
+function buildListings(){
+  marketGrid.innerHTML = listings.map(l => `
+    <div class="listing">
+      <div class="l-top">
+        <span class="l-cat">${l.cat}</span>
+        <span class="l-rating">⭐⭐⭐⭐⭐</span>
+      </div>
+      <h4>${l.name}</h4>
+      <p>${l.desc}</p>
+      <div class="l-bottom">
+        <div class="l-price">${l.price}<small>${l.seller}</small></div>
+        <button class="l-btn" onclick="buyItem(event, '${l.name}')">BUY</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function buyItem(e, name){
+  e.preventDefault();
+  e.stopPropagation();
+  glitchSound();
+  fakePopup.textContent = '// ORDER PLACED: ' + name + ' //';
+  fakePopup.classList.add('show');
+  setTimeout(() => fakePopup.classList.remove('show'), 2000);
+  addFeed('> transaction confirmed: ' + name);
+}
+
+torBtn.addEventListener('click', () => {
+  torBtn.disabled = true;
+  torBtn.style.display = 'none';
+  torLog.classList.add('show');
+  torLog.textContent = '';
+  let i = 0;
+
+  function nextStep(){
+    if(i < torSteps.length){
+      torLog.textContent += torSteps[i] + '\n';
+      torLog.scrollTop = torLog.scrollHeight;
+      if(audioOn) tone(400 + Math.random()*400, 0.05, 'square', 0.04);
+      i++;
+      setTimeout(nextStep, 200 + Math.random() * 300);
+    } else {
+      // Done
+      torConnect.style.display = 'none';
+      darkMarket.classList.add('show');
+      buildListings();
+      glitchSound();
+      triggerShake();
+      setTimeout(() => {
+        if(Math.random() < 0.6) fireJumpscare();
+      }, 400);
+      startMarketFeed();
+    }
+  }
+  nextStep();
+});
+
+function addFeed(msg){
+  const div = document.createElement('div');
+  div.textContent = msg;
+  feedContent.appendChild(div);
+  if(feedContent.children.length > 8) feedContent.firstChild.remove();
+}
+
+function startMarketFeed(){
+  const buyers = ['s1l3nt', 'dark_angel', 'zer0', 'ghost', 'crypt0', 'shadow', 'vpn_king'];
+  const items = ['DB Dump', '0-Day', 'DDoS', 'Access', 'ID Kit', 'Ransomware'];
+  setInterval(() => {
+    if(document.visibilityState === 'visible'){
+      const buyer = buyers[Math.floor(Math.random()*buyers.length)];
+      const item = items[Math.floor(Math.random()*items.length)];
+      const price = (Math.random()*10).toFixed(2);
+      const feed = ['BTC', 'XMR'][Math.floor(Math.random()*2)];
+      addFeed(`> ${buyer} purchased ${item} for ${price} ${feed}`);
+      const users = (14000 + Math.floor(Math.random()*500)).toLocaleString();
+      if(marketUsers) marketUsers.textContent = users;
+    }
+  }, 4000);
+}
+
+/* ============================================================
    CONSOLE
    ============================================================ */
 console.log('%c💀 ABDO SAAD 💀', 'color:#ff0055;font-size:32px;font-weight:900;text-shadow:0 0 20px #ff0055;');
@@ -1532,17 +1708,18 @@ document.addEventListener('keydown', e => {
     fireJumpscare();
     screamSound();
     triggerShake();
+    showVirusAlert();
     setTimeout(() => document.body.style.filter = '', 1500);
   }
 });
 
 setInterval(() => {
-  if(document.visibilityState === 'visible' && Math.random() < 0.25){
+  if(document.visibilityState === 'visible' && Math.random() < 0.2){
     document.body.style.transition = 'filter .05s';
-    document.body.style.filter = 'invert(1)';
-    setTimeout(() => document.body.style.filter = '', 120);
+    document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    setTimeout(() => document.body.style.filter = '', 100);
   }
-}, 45000);
+}, 30000);
 </script>
 </body>
-                                                                                                                                                                </html>
+      </html>
