@@ -325,9 +325,7 @@ section{padding:110px 5vw;position:relative}
   background:rgba(0,0,0,0.6);border:1px solid #2a0a12;border-radius:12px;padding:40px;
   text-align:center;
 }
-.tor-connect .onion{
-  font-size:64px;filter:drop-shadow(0 0 20px var(--red));animation:skullpulse 2s infinite;
-}
+.tor-connect .onion{font-size:64px;filter:drop-shadow(0 0 20px var(--red));animation:skullpulse 2s infinite}
 .tor-connect h3{color:var(--red);font-size:20px;letter-spacing:2px;direction:ltr}
 .tor-connect p{color:var(--muted);font-size:14px;max-width:400px}
 .tor-log{
@@ -383,6 +381,180 @@ section{padding:110px 5vw;position:relative}
 .market-feed .feed-title{color:var(--red);margin-bottom:8px;font-size:11px;letter-spacing:1px}
 .market-feed div div{animation:feedIn .3s ease}
 @keyframes feedIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+
+/* ================== TRAP LINK SECTION ================== */
+.trap-stage {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.fake-inbox {
+  background: linear-gradient(180deg, #0a0808, #050303);
+  border: 1px solid #2a0a12;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: var(--mono);
+  box-shadow: 0 0 40px rgba(255,0,85,0.1);
+}
+.fi-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 22px;
+  background: rgba(255,0,85,0.05);
+  border-bottom: 1px solid #2a0a12;
+  font-size: 12px;
+  direction: ltr;
+  text-align: left;
+}
+.fi-from { color: var(--muted); }
+.fi-from b { color: var(--red); }
+.fi-sub { color: var(--amber); font-size: 13px; }
+.fi-body {
+  padding: 26px 22px;
+  font-size: 14px;
+  color: var(--text);
+  direction: ltr;
+  text-align: left;
+  line-height: 1.9;
+}
+.trap-link {
+  display: inline-block;
+  color: var(--mint);
+  text-decoration: underline;
+  text-decoration-color: rgba(0,255,200,0.4);
+  font-weight: 600;
+  margin-top: 14px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all .2s;
+  position: relative;
+  cursor: none;
+  word-break: break-all;
+}
+.trap-link:hover {
+  color: var(--red);
+  text-decoration-color: var(--red);
+  background: rgba(255,0,85,0.08);
+  box-shadow: 0 0 20px rgba(255,0,85,0.2);
+}
+.trap-link::after {
+  content: attr(data-real);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background: #1a0505;
+  border: 1px solid var(--red);
+  color: var(--red);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: var(--mono);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all .2s;
+  box-shadow: 0 0 30px rgba(255,0,85,0.4);
+  z-index: 100;
+  direction: ltr;
+}
+.trap-link:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(2px);
+}
+.trap-reveal {
+  margin-top: 22px;
+  padding: 16px 20px;
+  background: rgba(255,0,85,0.06);
+  border-left: 3px solid var(--red);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.8;
+  display: none;
+  direction: rtl;
+  text-align: right;
+}
+.trap-reveal.show { display: block; animation: fadeIn .4s ease; }
+.trap-reveal .red { color: var(--red); font-weight: 700; }
+.trap-reveal .mint { color: var(--mint); font-family: var(--mono); direction: ltr; display: inline-block; }
+.trap-hint {
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 1px;
+  animation: blink 2.4s steps(1) infinite;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+/* ================== TRAP OVERLAY SEQUENCE ================== */
+.trap-lock {
+  position: fixed;
+  inset: 0;
+  z-index: 999998;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .15s, visibility .15s;
+  font-family: var(--mono);
+  padding: 24px;
+  text-align: center;
+}
+.trap-lock.fire { opacity: 1; visibility: visible; }
+.trap-lock .lock-title {
+  font-family: var(--horror);
+  color: var(--red);
+  font-size: clamp(2rem, 7vw, 4.5rem);
+  letter-spacing: 6px;
+  margin-bottom: 18px;
+  text-shadow: 0 0 40px var(--red);
+  animation: msgShiver .08s infinite;
+}
+.trap-lock .lock-line {
+  color: var(--mint);
+  font-size: clamp(12px, 2vw, 15px);
+  margin: 4px 0;
+  direction: ltr;
+  opacity: 0;
+  animation: lockLineIn .3s forwards;
+}
+@keyframes lockLineIn { to { opacity: 1; } }
+.trap-lock .lock-final {
+  margin-top: 30px;
+  color: #fff;
+  font-size: 14px;
+  max-width: 480px;
+  direction: rtl;
+  line-height: 1.8;
+}
+.trap-lock .lock-final b { color: var(--red); }
+.trap-lock .lock-btn {
+  margin-top: 26px;
+  background: var(--mint);
+  color: #031410;
+  border: 0;
+  padding: 14px 34px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: none;
+  letter-spacing: 1px;
+  transition: .2s;
+}
+.trap-lock .lock-btn:hover {
+  box-shadow: 0 0 40px rgba(0,255,200,0.5);
+  transform: translateY(-2px);
+}
 
 /* ================== WRITEUPS ================== */
 .ctf-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
@@ -563,6 +735,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
     <a href="#skills">المهارات</a>
     <a href="#terminal">التيرمنال</a>
     <a href="#darkweb">الدارك ويب</a>
+    <a href="#traplink">الرابط الملغم</a>
     <a href="#writeups">الكتابات</a>
     <a href="#contact">تواصل</a>
   </nav>
@@ -705,7 +878,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
             </div>
           </div>
         </div>
-        <div class="term-hint">Try: <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>nmap</code> · <code>hack</code> · <code>ghost</code> · <code>scream</code> · <code>scare</code> · <code>virus</code></div>
+        <div class="term-hint">Try: <code>help</code> · <code>whoami</code> · <code>skills</code> · <code>nmap</code> · <code>hack</code> · <code>ghost</code> · <code>scream</code> · <code>scare</code> · <code>virus</code> · <code>darkweb</code></div>
       </div>
     </div>
   </section>
@@ -748,6 +921,57 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
       </div>
     </div>
   </section>
+
+  <!-- TRAP LINK / PHISHING SIMULATION -->
+  <section id="traplink">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="sec-tag">// PHISHING SIMULATION</span>
+        <h2>الرابط <em>الملغّم</em></h2>
+        <p>ده رابط اختراق حقيقي الشكل — لكنه آمن 100%. اضغط عليه وشوف إيه اللي بيحصل. اللي هتتعلمه هنا هيحميك من الرابط الحقيقي.</p>
+      </div>
+      <div class="trap-stage reveal">
+        <div class="fake-inbox">
+          <div class="fi-header">
+            <span class="fi-from">from: <b>support@paypal-secure.onion</b></span>
+            <span class="fi-sub">Subject: Your account is locked — verify NOW</span>
+          </div>
+          <div class="fi-body">
+            Dear user, we detected <b style="color:var(--red)">suspicious activity</b> on your account. Click the link below to unlock your account immediately:<br />
+            <a href="#" class="trap-link" id="trapLink" data-real="Actual destination: hxxp://paypa1-secure.ru/verify/steal.php?session=YOUR_IP">👉 https://paypal.com/verify-account/login</a>
+            <div class="trap-reveal" id="trapReveal">
+              <span class="red">لو ده كان رابط حقيقي، كنت في مشكلة.</span><br /><br />
+              اللي دخلته كان بيوهمك إنه <span class="mint">paypal.com</span>، لكنه فعلياً رايح لـ <span class="mint">paypa1-secure.ru</span> — الحرف <span class="red">l</span> مبدّل بـ<span class="red">1</span>. فرق حرف واحد بس، والفرق بين حسابك وحساب مهاجم.<br /><br />
+              <b>علامات الرابط الملغّم:</b><br />
+              • اسم دومين مشابه بحرف أو اتنين (paypa1, раураl, paypal-secure)<br />
+              • امتداد غريب (.ru, .top, .onion, .xyz)<br />
+              • كلمة "verify" أو "secure" أو "login" في المسار<br />
+              • اختصارات (bit.ly, tinyurl) بتخفي الوجهة الحقيقية<br />
+              • Hover على الرابط يكشف الوجهة الحقيقية — اعملها دايمًا<br />
+            </div>
+          </div>
+        </div>
+        <div class="trap-hint">// hover the link. read the tooltip. then click. you know you want to.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRAP LOCK OVERLAY -->
+  <div class="trap-lock" id="trapLock">
+    <div class="lock-title">SYSTEM LOCKED</div>
+    <div class="lock-line" style="animation-delay:.1s">&gt; credentials captured...</div>
+    <div class="lock-line" style="animation-delay:.5s">&gt; session token: 8f4a...c9d2</div>
+    <div class="lock-line" style="animation-delay:.9s">&gt; browser fingerprint saved</div>
+    <div class="lock-line" style="animation-delay:1.3s">&gt; IP address logged</div>
+    <div class="lock-line" style="animation-delay:1.7s">&gt; exfiltrating to c2 server... DONE</div>
+    <div class="lock-line" style="animation-delay:2.1s;color:var(--red)">&gt; you have been phished.</div>
+    <div class="lock-final">
+      <b>لو ده كان رابط حقيقي، بياناتك كانت راحت خلاص.</b><br /><br />
+      ده كان محاكاة آمنة جوه موقعي — مفيش حاجة اتسرقت، مفيش حاجة اتبعتت. بس الرابط اللي دخلته في الواقع كان ممكن يعمل بالظبط اللي شفته فوق.<br /><br />
+      <b>لما تشك في رابط — اعمل hover، اقرأ الوجهة الحقيقية، ومتدخلش.</b>
+    </div>
+    <button class="lock-btn" id="trapDismiss">فهمت. هحترس.</button>
+  </div>
 
   <!-- WRITEUPS -->
   <section id="writeups">
@@ -827,6 +1051,7 @@ footer{border-top:1px solid var(--line);padding:50px 5vw 40px;background:var(--b
       <a href="#arsenal">Arsenal</a>
       <a href="#scanner">Scanner</a>
       <a href="#darkweb">Dark Web</a>
+      <a href="#traplink">Trap Link</a>
       <a href="#terminal">Shell</a>
       <a href="#contact">Contact</a>
     </div>
@@ -869,7 +1094,7 @@ addEventListener('mousemove', e => {
   ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
   requestAnimationFrame(follow);
 })();
-document.querySelectorAll('a,button,input,textarea,select,.tool,.writeup,.listing,.tor-connect').forEach(el => {
+document.querySelectorAll('a,button,input,textarea,select,.tool,.writeup,.listing,.tor-connect,.trap-link').forEach(el => {
   el.addEventListener('mouseenter', () => cur.classList.add('hover'));
   el.addEventListener('mouseleave', () => cur.classList.remove('hover'));
 });
@@ -1653,7 +1878,6 @@ torBtn.addEventListener('click', () => {
       i++;
       setTimeout(nextStep, 200 + Math.random() * 300);
     } else {
-      // Done
       torConnect.style.display = 'none';
       darkMarket.classList.add('show');
       buildListings();
@@ -1692,6 +1916,51 @@ function startMarketFeed(){
 }
 
 /* ============================================================
+   TRAP LINK — phishing simulation
+   ============================================================ */
+const trapLink = document.getElementById('trapLink');
+const trapReveal = document.getElementById('trapReveal');
+const trapLock = document.getElementById('trapLock');
+const trapDismiss = document.getElementById('trapDismiss');
+
+if (trapLink) {
+  trapLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (trapLock.classList.contains('fire')) return;
+
+    triggerShake();
+    glitchSound();
+    screamSound();
+
+    setTimeout(() => {
+      trapLock.classList.add('fire');
+      const lines = trapLock.querySelectorAll('.lock-line');
+      lines.forEach((ln, i) => {
+        ln.style.opacity = '0';
+        ln.style.animation = 'none';
+        setTimeout(() => {
+          ln.style.animation = 'lockLineIn .3s forwards';
+        }, 150 + i * 400);
+      });
+    }, 250);
+
+    setTimeout(() => {
+      trapReveal.classList.add('show');
+      trapReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 5000);
+  });
+
+  trapDismiss.addEventListener('click', () => {
+    trapLock.classList.remove('fire');
+    glitchSound();
+    if (trapReveal) {
+      trapReveal.classList.add('show');
+      trapReveal.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  });
+}
+
+/* ============================================================
    CONSOLE
    ============================================================ */
 console.log('%c💀 ABDO SAAD 💀', 'color:#ff0055;font-size:32px;font-weight:900;text-shadow:0 0 20px #ff0055;');
@@ -1722,4 +1991,4 @@ setInterval(() => {
 }, 30000);
 </script>
 </body>
-      </html>
+          </html>
